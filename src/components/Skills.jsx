@@ -8,9 +8,6 @@ import {
   GitBranch,
   Terminal,
   Cpu,
-  Radio,
-  Sparkles,
-  Layers,
   Network
 } from 'lucide-react';
 
@@ -47,10 +44,8 @@ const skillColumns = [
       { name: "OTP Auth" },
       { name: "Clean Architecture" },
       { name: "Microservices" },
-      { name: "Cron jobs" },
-      { name: "Razorpay" },
-      { name: "Cloudinary" },
-      { name: "SendGrid" }
+      { name: "Modular Monolith" },
+      { name: "Cron jobs" }
     ]
   },
   {
@@ -75,12 +70,10 @@ const skillColumns = [
       { name: "React Three Fiber (R3F)", highlight: true },
       { name: "HTML5 & CSS3" },
       { name: "Tailwind CSS" },
-      { name: "Drei" },
       { name: "3D Scenes & Lighting" },
-      { name: "GLTF / GLB Models" },
       { name: "Interactive 3D" },
       { name: "Framer Motion / GSAP" },
-      { name: "Role Dashboards" },
+      { name: "RBAC", highlight: true },
       { name: "Real-Time WebSocket" },
       { name: "Flutter (Mobile)" }
     ]
@@ -105,9 +98,7 @@ const skillColumns = [
       { name: "Docker", highlight: true },
       { name: "Kubernetes (familiar)" },
       { name: "CI/CD Pipelines" },
-      { name: "Render" },
-      { name: "Linux Administration" },
-      { name: "SSL / Nginx" }
+      { name: "Render" }
     ]
   },
   {
@@ -130,15 +121,14 @@ const skillColumns = [
       { name: "GitHub", highlight: true },
       { name: "Gitflow & Branching" },
       { name: "PRs & Code Review" },
-      { name: "GitHub Actions" },
-      { name: "Merge & Rebasing" }
+      { name: "GitHub Actions" }
     ]
   },
   {
-    id: "api-testing",
+    id: "tools-integrations",
     number: "05",
-    title: "API Testing & Tools",
-    badge: "Postman & Apidog",
+    title: "Tools & Integrations",
+    badge: "Testing & Services",
     icon: Terminal,
     accent: "emerald",
     ropeHeight: "h-10 lg:h-12",
@@ -152,19 +142,102 @@ const skillColumns = [
     skills: [
       { name: "Postman", highlight: true },
       { name: "Apidog", highlight: true },
-      { name: "OpenAPI / Swagger" },
-      { name: "Endpoint Mocking" },
-      { name: "Automated Testing" },
-      { name: "Telemetry Profiling" }
+      { name: "Razorpay", highlight: true },
+      { name: "SendGrid", highlight: true },
+      { name: "Cloudinary", highlight: true }
     ]
   }
 ];
+
+function SkillColumnCard({ col }) {
+  const Icon = col.icon;
+  return (
+    <div className={`flex flex-col items-center ${col.waveMargin} w-full transition-all duration-300`}>
+      {/* Suspended Fiber Data Cable */}
+      <div className={`hidden lg:flex flex-col items-center ${col.ropeHeight} w-full transition-all duration-300`}>
+        {/* Top Bus Connection Bead */}
+        <div className={`w-2.5 h-2.5 rounded-full border ${col.cableAccent} shadow-[0_0_8px_rgba(255,255,255,0.4)] z-10`} />
+
+        {/* Cyber Conduit Line */}
+        <div className="w-[1.5px] flex-1 bg-gradient-to-b from-white/40 via-white/20 to-white/70" />
+
+        {/* Jack Clip Fastener */}
+        <div className="w-5 h-1.5 rounded-t-sm bg-gradient-to-b from-white/60 to-white/30 border border-white/40 shadow-sm" />
+      </div>
+
+      {/* The Skill Pillar Card */}
+      <div
+        onMouseEnter={() => soundFX.playHover()}
+        className={`group w-full rounded-2xl bg-gradient-to-b from-[#13161c] via-[#0f1217] to-[#0a0c10] border border-white/[0.08] ${col.glow} p-4 xl:p-5 flex flex-col justify-between transition-all duration-300 cursor-default hover:-translate-y-2 hover:rotate-[0.35deg] shadow-2xl relative overflow-hidden`}
+      >
+        {/* Top Edge Gradient Accent Bar */}
+        <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${col.topGradient} opacity-40 group-hover:opacity-100 transition-opacity duration-300`} />
+
+        <div>
+          {/* Header Row: Icon, Title & Badge */}
+          <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/[0.06]">
+            <div className="flex items-center gap-2.5">
+              <div className={`w-8 h-8 rounded-lg ${col.iconBg} border flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-sm`}>
+                <Icon className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="font-mono text-[10px] text-white/40 block leading-none mb-1">
+                  {col.number}
+                </span>
+                <h3 className="text-sm sm:text-base font-bold text-white tracking-tight leading-tight">
+                  {col.title}
+                </h3>
+              </div>
+            </div>
+
+            <span className={`text-[9px] font-mono px-2 py-0.5 rounded-md border ${col.badgeColor} shrink-0`}>
+              {col.badge}
+            </span>
+          </div>
+
+          {/* Simply Listed Skills Chips (Clean, Professional & Compact) */}
+          <div className="space-y-1.5">
+            {col.skills.map((s) => (
+              <div
+                key={s.name}
+                className={`flex items-center gap-2 px-2.5 py-1 rounded-lg border transition-all duration-150 ${
+                  s.highlight
+                    ? 'bg-white/[0.04] border-white/[0.14] hover:border-white/40 hover:bg-white/[0.08]'
+                    : 'bg-transparent border-transparent hover:bg-white/[0.03] hover:border-white/[0.08]'
+                }`}
+              >
+                <div className="w-4 h-4 flex items-center justify-center shrink-0">
+                  <TechLogo name={s.name} className="w-3.5 h-3.5" />
+                </div>
+
+                <span className="text-xs text-gray-300 group-hover:text-white font-medium truncate">
+                  {s.name}
+                </span>
+
+                {s.highlight && (
+                  <span className={`w-1 h-1 rounded-full ${col.dotColor} shrink-0 ml-auto`} />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Status Accent Dots */}
+        <div className="pt-3 mt-3 border-t border-white/[0.05] flex items-center gap-1.5">
+          <span className={`w-1.5 h-1.5 rounded-full ${col.dotColor} opacity-70 group-hover:opacity-100 transition-opacity`} />
+          <span className="w-1 h-1 rounded-full bg-white/20 group-hover:bg-white/40 transition-colors" />
+          <span className="w-1 h-1 rounded-full bg-white/20 group-hover:bg-white/40 transition-colors" />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Skills() {
   return (
     <section
       id="skills"
-      className="min-h-screen w-full relative flex flex-col justify-center items-center py-20 lg:py-0 overflow-hidden bg-[#0a0c0f] select-none"
+      className="min-h-screen w-full relative flex flex-col justify-center items-center py-16 lg:py-6 overflow-hidden bg-[#0a0c0f] select-none"
     >
       {/* Background Ambience */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/5 blur-[150px] pointer-events-none rounded-full" />
@@ -255,22 +328,22 @@ export default function Skills() {
       {/* =========================================================================
           MAIN CENTER CONTAINER (Full Width Utilization)
          ========================================================================= */}
-      <div className="w-full max-w-[1560px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10 my-auto">
+      <div className="w-full max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 my-auto">
         
         {/* Clean, Bold, Minimal Header */}
-        <div className="text-center mb-10 lg:mb-12">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white">
+        <div className="text-center mb-6 lg:mb-8">
+          <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white">
             Skills
           </h2>
         </div>
 
         {/* =========================================================================
-            CYBER CONDUIT & 5 SUSPENDED SKILL PILLARS (Single Row Wave Model)
+            CYBER CONDUIT & SUSPENDED SKILL PILLARS (Wave Model with AI Integration)
            ========================================================================= */}
-        <div className="relative pt-6">
+        <div className="relative pt-5">
           
           {/* Overhead Horizontal High-Tech Data Bus Cable */}
-          <div className="hidden lg:block absolute top-6 left-4 right-4 h-[2px]">
+          <div className="hidden lg:block absolute top-5 left-4 right-4 h-[2px]">
             {/* Cable Conduit Line */}
             <div className="w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent relative overflow-hidden">
               {/* Traveling Data Signal Pulse */}
@@ -285,95 +358,139 @@ export default function Skills() {
             <div className="absolute -right-1 -top-1.5 w-3.5 h-3.5 rounded-full border border-cyan-400/60 bg-zinc-900 shadow-[0_0_8px_rgba(6,182,212,0.4)]" />
           </div>
 
-          {/* 5 Suspended Pillars: Single Layer on Desktop with Wave Elevation */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 xl:gap-5 items-start">
-            {skillColumns.map((col) => {
-              const Icon = col.icon;
+          {/* 5-Column High-Tech Grid Architecture */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 xl:gap-5 items-start">
+            
+            {/* Column 1: Backend */}
+            <SkillColumnCard col={skillColumns[0]} />
 
-              return (
-                <div
-                  key={col.id}
-                  className={`flex flex-col items-center ${col.waveMargin} transition-all duration-300`}
-                >
-                  {/* Suspended Fiber Data Cable */}
-                  <div className={`hidden lg:flex flex-col items-center ${col.ropeHeight} w-full transition-all duration-300`}>
-                    {/* Top Bus Connection Bead */}
-                    <div className={`w-2.5 h-2.5 rounded-full border ${col.cableAccent} shadow-[0_0_8px_rgba(255,255,255,0.4)] z-10`} />
+            {/* Column 2: Frontend & 3D */}
+            <SkillColumnCard col={skillColumns[1]} />
 
-                    {/* Cyber Conduit Line */}
-                    <div className="w-[1.5px] flex-1 bg-gradient-to-b from-white/40 via-white/20 to-white/70" />
+            {/* Columns 3, 4, 5: Right Matrix holding DevOps, Version Control, Tools + AI Robot Showcase */}
+            <div className="col-span-1 md:col-span-2 lg:col-span-3 flex flex-col justify-between w-full">
+              
+              {/* Top Row: DevOps & Cloud, Version Control, Tools & Integrations */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 xl:gap-5 items-start w-full">
+                <SkillColumnCard col={skillColumns[2]} />
+                <SkillColumnCard col={skillColumns[3]} />
+                <SkillColumnCard col={skillColumns[4]} />
+              </div>
 
-                    {/* Jack Clip Fastener */}
-                    <div className="w-5 h-1.5 rounded-t-sm bg-gradient-to-b from-white/60 to-white/30 border border-white/40 shadow-sm" />
-                  </div>
+              {/* =========================================================================
+                  AI INTELLIGENCE ROBOT & 4 FLOATING HOLOGRAPHIC BADGES
+                  Softly blended, compact, ambient cyberpunk watermark
+                 ========================================================================= */}
+              <div className="relative w-full mt-1 lg:mt-2 flex items-center justify-center">
+                
+                {/* Soft Ambient Matrix Glow */}
+                <div className="absolute inset-0 bg-cyan-500/[0.04] blur-2xl pointer-events-none rounded-full" />
 
-                  {/* The Skill Pillar Card */}
+                {/* Compact Robot & Hologram Stage */}
+                <div className="relative w-full max-w-[380px] sm:max-w-[420px] lg:max-w-[450px] aspect-[650/352] flex items-center justify-center my-1">
+                  
+                  {/* Seamless Theme-Blended Robot Illustration (Low Opacity, Screen Blend, Zero Box Borders) */}
+                  <img
+                    src="/assets/ai_robot_theme_blend.png"
+                    alt="AI Intelligence and Autonomous Engineering"
+                    className="w-full h-full object-contain pointer-events-none select-none opacity-35 hover:opacity-55 transition-opacity duration-500 mix-blend-screen filter drop-shadow-[0_0_12px_rgba(6,182,212,0.15)]"
+                    style={{
+                      maskImage: 'radial-gradient(ellipse at 50% 50%, black 50%, transparent 95%)',
+                      WebkitMaskImage: 'radial-gradient(ellipse at 50% 50%, black 50%, transparent 95%)'
+                    }}
+                  />
+
+                  {/* -------------------------------------------------------------
+                      1. TOP-LEFT: AI-Assisted Developer (Floating near Globe HUD)
+                     ------------------------------------------------------------- */}
                   <div
                     onMouseEnter={() => soundFX.playHover()}
-                    className={`group w-full min-h-[340px] sm:min-h-[360px] rounded-2xl bg-gradient-to-b from-[#13161c] via-[#0f1217] to-[#0a0c10] border border-white/[0.08] ${col.glow} p-5 xl:p-6 flex flex-col justify-between transition-all duration-300 cursor-default hover:-translate-y-2 hover:rotate-[0.35deg] shadow-2xl relative overflow-hidden`}
+                    className="absolute top-[4%] left-[-2%] sm:left-[1%] z-20 flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl border border-cyan-400/40 bg-[#08111d]/90 backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.2)] hover:border-cyan-300 hover:scale-105 transition-all duration-200 cursor-default group/badge"
                   >
-                    {/* Top Edge Gradient Accent Bar */}
-                    <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${col.topGradient} opacity-40 group-hover:opacity-100 transition-opacity duration-300`} />
-
-                    <div>
-                      {/* Header Row: Icon, Title & Badge */}
-                      <div className="flex items-center justify-between pb-3.5 mb-3.5 border-b border-white/[0.06]">
-                        <div className="flex items-center gap-2.5">
-                          <div className={`w-8 h-8 rounded-lg ${col.iconBg} border flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-sm`}>
-                            <Icon className="w-4 h-4" />
-                          </div>
-                          <div>
-                            <span className="font-mono text-[10px] text-white/40 block leading-none mb-1">
-                              {col.number}
-                            </span>
-                            <h3 className="text-sm sm:text-base font-bold text-white tracking-tight leading-tight">
-                              {col.title}
-                            </h3>
-                          </div>
-                        </div>
-
-                        <span className={`text-[9px] font-mono px-2 py-0.5 rounded-md border ${col.badgeColor} shrink-0`}>
-                          {col.badge}
-                        </span>
-                      </div>
-
-                      {/* Simply Listed Skills Chips (Clean, Professional & Compact) */}
-                      <div className="space-y-1.5">
-                        {col.skills.map((s) => (
-                          <div
-                            key={s.name}
-                            className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg border transition-all duration-150 ${
-                              s.highlight
-                                ? 'bg-white/[0.04] border-white/[0.14] hover:border-white/40 hover:bg-white/[0.08]'
-                                : 'bg-transparent border-transparent hover:bg-white/[0.03] hover:border-white/[0.08]'
-                            }`}
-                          >
-                            <div className="w-4 h-4 flex items-center justify-center shrink-0">
-                              <TechLogo name={s.name} className="w-3.5 h-3.5" />
-                            </div>
-
-                            <span className="text-xs text-gray-300 group-hover:text-white font-medium truncate">
-                              {s.name}
-                            </span>
-
-                            {s.highlight && (
-                              <span className={`w-1 h-1 rounded-full ${col.dotColor} shrink-0 ml-auto`} />
-                            )}
-                          </div>
-                        ))}
-                      </div>
+                    <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex items-center justify-center text-cyan-300 shrink-0">
+                      <TechLogo name="AI-Assisted Developer" className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
                     </div>
-
-                    {/* Bottom Status Accent Dots */}
-                    <div className="pt-4 mt-3 border-t border-white/[0.05] flex items-center gap-1.5">
-                      <span className={`w-1.5 h-1.5 rounded-full ${col.dotColor} opacity-70 group-hover:opacity-100 transition-opacity`} />
-                      <span className="w-1 h-1 rounded-full bg-white/20 group-hover:bg-white/40 transition-colors" />
-                      <span className="w-1 h-1 rounded-full bg-white/20 group-hover:bg-white/40 transition-colors" />
-                    </div>
+                    <span className="text-[10px] sm:text-xs font-semibold text-cyan-100 group-hover/badge:text-white tracking-wide">
+                      AI-Assisted Developer
+                    </span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#22d3ee] animate-pulse" />
                   </div>
+
+                  {/* -------------------------------------------------------------
+                      2. UPPER-RIGHT: Vibe Coder (Touching the holographic grid screen)
+                     ------------------------------------------------------------- */}
+                  {/* Subtle Finger Touch Ripple */}
+                  <div className="absolute top-[34%] right-[27%] z-20 pointer-events-none">
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-300 shadow-[0_0_8px_#22d3ee]" />
+                    </span>
+                  </div>
+
+                  {/* Connecting Cyber Tracer Wire */}
+                  <div className="hidden sm:block absolute top-[22%] right-[19%] w-8 h-[1px] bg-gradient-to-r from-cyan-400/60 to-transparent rotate-[-22deg] pointer-events-none" />
+
+                  <div
+                    onMouseEnter={() => soundFX.playHover()}
+                    className="absolute top-[4%] right-[-2%] sm:right-[1%] z-20 flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl border border-cyan-400/60 bg-[#061525]/90 backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:border-cyan-300 hover:scale-105 transition-all duration-200 cursor-default group/badge"
+                  >
+                    <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex items-center justify-center text-cyan-300 shrink-0">
+                      <TechLogo name="Vibe Coder" className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
+                    </div>
+                    <span className="text-[10px] sm:text-xs font-bold text-cyan-200 group-hover/badge:text-white tracking-wide">
+                      Vibe Coder
+                    </span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#22d3ee] animate-pulse" />
+                  </div>
+
+                  {/* -------------------------------------------------------------
+                      3. LOWER-LEFT: AI Pair Programming (At robot hand touch gesture)
+                     ------------------------------------------------------------- */}
+                  {/* Subtle Hand Touch Ripple */}
+                  <div className="absolute bottom-[28%] left-[23%] z-20 pointer-events-none">
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-300 shadow-[0_0_8px_#34d399]" />
+                    </span>
+                  </div>
+
+                  {/* Connecting Cyber Tracer Wire */}
+                  <div className="hidden sm:block absolute bottom-[20%] left-[17%] w-7 h-[1px] bg-gradient-to-r from-emerald-400/60 to-transparent rotate-[28deg] pointer-events-none" />
+
+                  <div
+                    onMouseEnter={() => soundFX.playHover()}
+                    className="absolute bottom-[4%] left-[-2%] sm:left-[1%] z-20 flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl border border-emerald-400/50 bg-[#061512]/90 backdrop-blur-md shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:border-emerald-300 hover:scale-105 transition-all duration-200 cursor-default group/badge"
+                  >
+                    <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex items-center justify-center text-emerald-300 shrink-0">
+                      <TechLogo name="AI Pair Programming" className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
+                    </div>
+                    <span className="text-[10px] sm:text-xs font-semibold text-emerald-200 group-hover/badge:text-white tracking-wide">
+                      AI Pair Programming
+                    </span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399] animate-pulse" />
+                  </div>
+
+                  {/* -------------------------------------------------------------
+                      4. BOTTOM-RIGHT: Prompt Engineer (Near code/data screen)
+                     ------------------------------------------------------------- */}
+                  <div
+                    onMouseEnter={() => soundFX.playHover()}
+                    className="absolute bottom-[4%] right-[-2%] sm:right-[1%] z-20 flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl border border-amber-400/50 bg-[#161005]/90 backdrop-blur-md shadow-[0_0_15px_rgba(245,158,11,0.2)] hover:border-amber-300 hover:scale-105 transition-all duration-200 cursor-default group/badge"
+                  >
+                    <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex items-center justify-center text-amber-300 shrink-0">
+                      <TechLogo name="Prompt Engineer" className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
+                    </div>
+                    <span className="text-[10px] sm:text-xs font-semibold text-amber-200 group-hover/badge:text-white tracking-wide">
+                      Prompt Engineer
+                    </span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_#fbbf24] animate-pulse" />
+                  </div>
+
                 </div>
-              );
-            })}
+              </div>
+
+            </div>
+
           </div>
 
         </div>

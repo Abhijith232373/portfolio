@@ -341,10 +341,54 @@ export function ApidogIcon({ className = "w-5 h-5" }) {
   );
 }
 
+// AI & Vibe Coder Icons
+export function VibeCoderIcon({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z" stroke="#00f0ff" fill="#00f0ff" fillOpacity="0.2"/>
+    </svg>
+  );
+}
+
+export function AiDevIcon({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="4" y="4" width="16" height="16" rx="3" stroke="#a78bfa"/>
+      <circle cx="9" cy="9" r="1.5" fill="#a78bfa"/>
+      <circle cx="15" cy="9" r="1.5" fill="#a78bfa"/>
+      <path d="M8 15h8" stroke="#a78bfa"/>
+    </svg>
+  );
+}
+
+export function PromptEngineerIcon({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <polyline points="4 17 10 11 4 5" stroke="#f59e0b"/>
+      <line x1="12" y1="19" x2="20" y2="19" stroke="#f59e0b"/>
+    </svg>
+  );
+}
+
+export function PairProgIcon({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="#34d399"/>
+      <circle cx="9" cy="7" r="4" stroke="#34d399"/>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" stroke="#34d399"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#34d399"/>
+    </svg>
+  );
+}
+
 // Helper to look up tech logo by name
 export function TechLogo({ name, className = "w-5 h-5" }) {
   const n = (name || "").toLowerCase().trim();
 
+  if (n.includes("vibe")) return <VibeCoderIcon className={className} />;
+  if (n.includes("prompt")) return <PromptEngineerIcon className={className} />;
+  if (n.includes("pair")) return <PairProgIcon className={className} />;
+  if (n.includes("ai-assisted") || n.includes("ai assisted")) return <AiDevIcon className={className} />;
   if (n.includes("golang") || n === "go") return <GolangIcon className={className} />;
   if (n === "sql") return <SqlIcon className={className} />;
   if (n.includes("fiber")) return <FiberIcon className={className} />;

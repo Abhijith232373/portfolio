@@ -75,9 +75,9 @@ export default function App() {
 
         <Skills />
 
-        <ArchitectureLab />
-
         <Projects />
+
+        <ArchitectureLab />
 
         <Experience />
 

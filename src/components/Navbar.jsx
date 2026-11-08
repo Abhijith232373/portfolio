@@ -12,7 +12,7 @@ export default function Navbar() {
       setScrolled(window.scrollY > 30);
 
       // Determine active section
-      const sections = ['about', 'services', 'skills', 'architecture', 'projects', 'experience', 'contact'];
+      const sections = ['about', 'services', 'skills', 'projects', 'architecture', 'experience', 'contact'];
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {
