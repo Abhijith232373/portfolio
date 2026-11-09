@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { portfolioData } from '../data/portfolioData';
 import { soundFX } from '../utils/audioFX';
 import { TechLogo } from './TechIcons';
 import { GithubIcon } from './SocialIcons';
 import {
-  ExternalLink,
   Calendar,
   Star,
   Layers,
@@ -12,8 +12,11 @@ import {
   Cpu,
   X,
   ArrowUpRight,
+  Activity,
+  GitBranch,
+  Terminal,
   Users,
-  Activity
+  Server
 } from 'lucide-react';
 
 export default function Projects() {
@@ -45,6 +48,28 @@ export default function Projects() {
     setSelectedProject(null);
   };
 
+  // Lock background scrolling completely when project modal is open
+  useEffect(() => {
+    if (selectedProject) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow || 'unset';
+      };
+    }
+  }, [selectedProject]);
+
+  // Handle Escape key to close modal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && selectedProject) {
+        closeModal();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedProject]);
+
   const githubProfileUrl = portfolioData.personal.github || "https://github.com/Abhijith232373";
 
   return (
@@ -56,12 +81,93 @@ export default function Projects() {
       <div className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-cyan-500/5 blur-[160px] pointer-events-none rounded-full" />
       <div className="absolute bottom-1/4 right-1/3 w-[600px] h-[600px] bg-amber-500/5 blur-[160px] pointer-events-none rounded-full" />
 
-      {/* Full Screen Width Utilization (Eliminates Left & Right Empty Spaces) */}
-      <div className="w-full max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-10 xl:px-14 relative z-10">
+      {/* =========================================================================
+          LEFT SIDE TELEMETRY ANIMATION (Git Branch & Commit Stream)
+         ========================================================================= */}
+      <div className="hidden 2xl:flex absolute left-4 3xl:left-8 top-1/2 -translate-y-1/2 flex-col items-center gap-6 pointer-events-none z-20 opacity-80">
+        {/* Rotating Git Branch Node */}
+        <div className="relative w-24 h-24 flex items-center justify-center">
+          <div
+            className="absolute inset-0 rounded-full border border-dashed border-emerald-400/35 animate-spin"
+            style={{ animationDuration: '24s' }}
+          />
+          <div
+            className="absolute inset-2.5 rounded-full border border-emerald-300/20 border-t-emerald-400/80 animate-spin"
+            style={{ animationDuration: '14s', animationDirection: 'reverse' }}
+          />
+          <div className="w-9 h-9 rounded-full bg-emerald-500/10 border border-emerald-400/40 flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+            <GitBranch className="w-4 h-4 text-emerald-300 animate-pulse" />
+          </div>
+        </div>
+
+        {/* Vertical Equalizer Frequency Bars */}
+        <div className="flex items-center gap-1 h-12">
+          {[0.3, 1.2, 0.6, 1.5, 0.4, 1.1, 0.8].map((delay, idx) => (
+            <div
+              key={idx}
+              className="w-1 bg-emerald-400/50 rounded-full animate-pulse"
+              style={{
+                height: `${20 + (idx % 3) * 10}px`,
+                animationDelay: `${delay}s`,
+                animationDuration: '1.8s'
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Telemetry Label */}
+        <div className="text-[10px] font-mono tracking-widest text-emerald-400/70 uppercase [writing-mode:vertical-lr] rotate-180 flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+          <span>GIT.STREAM // REPOS VERIFIED</span>
+        </div>
+      </div>
+
+      {/* =========================================================================
+          RIGHT SIDE TELEMETRY ANIMATION (CI/CD Pipeline & Cloud Runtime)
+         ========================================================================= */}
+      <div className="hidden 2xl:flex absolute right-4 3xl:right-8 top-1/2 -translate-y-1/2 flex-col items-center gap-6 pointer-events-none z-20 opacity-80">
+        {/* Rotating Cloud Deployment Node */}
+        <div className="relative w-24 h-24 flex items-center justify-center">
+          <div
+            className="absolute inset-0 rounded-full border border-purple-400/35 border-b-transparent animate-spin"
+            style={{ animationDuration: '20s' }}
+          />
+          <div
+            className="absolute inset-3 rotate-45 border border-dashed border-cyan-300/40 animate-spin"
+            style={{ animationDuration: '15s', animationDirection: 'reverse' }}
+          />
+          <div className="w-9 h-9 rounded-full bg-purple-500/10 border border-purple-400/40 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.3)]">
+            <Server className="w-4 h-4 text-purple-300 animate-pulse" />
+          </div>
+        </div>
+
+        {/* Vertical Frequency Bars */}
+        <div className="flex items-center gap-1 h-12">
+          {[0.5, 1.4, 0.7, 1.2, 0.9, 0.4, 1.3].map((delay, idx) => (
+            <div
+              key={idx}
+              className="w-1 bg-purple-400/50 rounded-full animate-pulse"
+              style={{
+                height: `${22 + (idx % 4) * 8}px`,
+                animationDelay: `${delay}s`,
+                animationDuration: '2.0s'
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Telemetry Label */}
+        <div className="text-[10px] font-mono tracking-widest text-purple-400/70 uppercase [writing-mode:vertical-lr] flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-ping" />
+          <span>CI/CD.PIPELINE // PRODUCTION READY</span>
+        </div>
+      </div>
+
+      {/* Full Screen Width Utilization (Takes Left & Right Spaces) */}
+      <div className="w-full max-w-[1480px] 3xl:max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10">
         
         {/* =========================================================================
             CLEAN, MINIMAL HEADING + SIMPLE INLINE GITHUB PROFILE
-            (Removed line above & sentence below as requested)
            ========================================================================= */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6 pb-3 border-b border-white/[0.06]">
           <div className="flex items-center gap-3">
@@ -80,7 +186,7 @@ export default function Projects() {
             rel="noopener noreferrer"
             onMouseEnter={() => soundFX.playHover()}
             onClick={() => soundFX.playClick()}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.05] hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-400/50 text-xs font-mono text-gray-200 hover:text-white transition-all shadow-md group cursor-pointer shrink-0"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/[0.05] hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-400/50 text-xs font-mono text-gray-200 hover:text-white transition-all shadow-md group cursor-pointer shrink-0"
           >
             <GithubIcon className="w-3.5 h-3.5 fill-current text-white group-hover:text-cyan-300" />
             <span>github.com/Abhijith232373</span>
@@ -115,110 +221,93 @@ export default function Projects() {
         </div>
 
         {/* =========================================================================
-            8 COMPACT CARDS IN A 4-COLUMN GRID (2 Rows of 4 on Desktop)
-            Chronological Order: Latest (Aug 2026) to Oldest (Apr 2025)
+            8 STANDARDIZED PROJECT CARDS (4-Column Grid, 2 Rows of 4)
+            - Date pinned in Right Top Corner
+            - Full-Stack / Frontend / Group Project / Key Project Badges in Top Left
+            - Code option removed from card face
+            - Photorealistic landing page preview images
            ========================================================================= */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-5 items-stretch">
           {filteredProjects.map((project) => (
             <div
               key={project.id}
+              onClick={() => openModal(project)}
               onMouseEnter={() => soundFX.playHover()}
-              className={`group rounded-2xl overflow-hidden bg-gradient-to-b from-[#131722]/95 via-[#0e121a]/95 to-[#090c12]/95 border transition-all duration-300 flex flex-col justify-between shadow-xl relative hover:-translate-y-1.5 ${
+              className={`group rounded-2xl overflow-hidden bg-[#11141c] hover:bg-[#141824] border transition-all duration-300 flex flex-col justify-between shadow-lg relative hover:-translate-y-1.5 cursor-pointer ${
                 project.isImportant
                   ? 'border-amber-400/40 hover:border-amber-400/80 hover:shadow-[0_12px_35px_rgba(245,158,11,0.2)]'
                   : 'border-white/[0.08] hover:border-cyan-400/60 hover:shadow-[0_12px_35px_rgba(6,182,212,0.18)]'
               }`}
             >
-              {/* Top Accent Gradient Line */}
-              <div
-                className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r transition-opacity duration-300 opacity-50 group-hover:opacity-100 ${
-                  project.isImportant
-                    ? 'from-amber-400 via-orange-400 to-amber-200'
-                    : project.projectType === 'Full-Stack'
-                    ? 'from-emerald-400 via-cyan-400 to-blue-400'
-                    : 'from-cyan-400 via-blue-500 to-purple-500'
-                }`}
-              />
-
-              {/* Compact Visual Preview Banner */}
-              <div className="relative h-36 sm:h-40 w-full overflow-hidden bg-[#0c1017]">
+              {/* Card Image Banner */}
+              <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-[#0c1017]">
+                {/* Realistic Website Preview Screenshot */}
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 select-none"
+                  loading="lazy"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 select-none"
                 />
                 
-                {/* Vignette Gradients */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0e121a] via-[#0e121a]/30 to-black/60" />
+                {/* Subtle gradient overlay for clean contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#11141c] via-black/20 to-black/60 pointer-events-none" />
 
-                {/* Top Badges Row */}
-                <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between gap-1.5 z-10">
-                  {/* Exact Date Mentioned */}
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/85 backdrop-blur-md text-[10px] font-mono text-cyan-200 border border-cyan-400/30 shadow-sm">
-                    <Calendar className="w-3 h-3 text-cyan-400" />
-                    <span>{project.date}</span>
-                  </span>
-
-                  {/* Key Project / Team Badge */}
-                  <div className="flex items-center gap-1">
-                    {project.isImportant && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-950/90 backdrop-blur-md text-[10px] font-mono font-bold text-amber-300 border border-amber-400/70 shadow-sm">
-                        <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
-                        <span>{project.id === 'furniture-booking' ? 'imp!' : 'KEY'}</span>
-                      </span>
-                    )}
-
-                    {project.isGroupProject && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-purple-950/90 backdrop-blur-md text-[10px] font-mono text-purple-300 border border-purple-500/40">
-                        <Users className="w-2.5 h-2.5 text-purple-400" />
-                        <span>Team</span>
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Bottom Left: Full-Stack vs Frontend Only Badge */}
-                <div className="absolute bottom-2 left-2.5 z-10 flex items-center gap-1.5">
+                {/* TOP-LEFT: Clean Status, Group & Key Badges */}
+                <div className="absolute top-2.5 left-2.5 z-10 flex flex-wrap items-center gap-1.5 max-w-[70%]">
+                  {/* Type Badge */}
                   {project.projectType === 'Full-Stack' ? (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-950/90 backdrop-blur-md text-[10px] font-mono font-semibold text-emerald-300 border border-emerald-500/40">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-950/90 backdrop-blur-md text-[10px] font-mono font-semibold text-emerald-300 border border-emerald-500/40 shadow-sm">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                       Full-Stack
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-blue-950/90 backdrop-blur-md text-[10px] font-mono font-semibold text-blue-300 border border-blue-500/40">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-blue-950/90 backdrop-blur-md text-[10px] font-mono font-semibold text-blue-300 border border-blue-500/40 shadow-sm">
                       <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                      Frontend Only
+                      Frontend
                     </span>
                   )}
-                  
-                  <span className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-black/60 backdrop-blur-md text-gray-300 border border-white/10 uppercase">
-                    {project.category}
+
+                  {/* Group Project Badge */}
+                  {project.isGroupProject && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-purple-950/90 backdrop-blur-md text-[10px] font-mono font-medium text-purple-300 border border-purple-500/50 shadow-sm">
+                      <Users className="w-2.5 h-2.5 text-purple-400" />
+                      <span>Group</span>
+                    </span>
+                  )}
+
+                  {/* Key Project Badge */}
+                  {project.isImportant && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-950/90 backdrop-blur-md text-[10px] font-mono font-bold text-amber-300 border border-amber-400/80 shadow-[0_0_10px_rgba(245,158,11,0.25)]">
+                      <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" />
+                      <span>{project.id === 'furniture-booking' ? 'imp!' : 'Key'}</span>
+                    </span>
+                  )}
+                </div>
+
+                {/* TOP-RIGHT CORNER: Date (Pinned in Top-Right Corner) */}
+                <div className="absolute top-2.5 right-2.5 z-10">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/85 backdrop-blur-md text-[10px] sm:text-[11px] font-mono text-cyan-200 border border-cyan-400/40 shadow-md">
+                    <Calendar className="w-3 h-3 text-cyan-400" />
+                    <span>{project.date}</span>
                   </span>
                 </div>
               </div>
 
-              {/* Compact Card Body */}
+              {/* Card Body */}
               <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                 <div>
-                  {/* Number & Title */}
-                  <span className="font-mono text-[10px] text-white/40 block leading-none mb-1">
-                    {project.number}
-                  </span>
                   <h3 className="text-sm sm:text-base font-bold text-white tracking-tight leading-snug group-hover:text-cyan-300 transition-colors line-clamp-1">
                     {project.title}
                   </h3>
-                  <p className="text-[11px] font-mono text-cyan-400/80 line-clamp-1 mt-0.5">
-                    {project.subtitle}
-                  </p>
-
-                  {/* Concise Description */}
-                  <p className="text-xs text-gray-300 leading-relaxed mt-2 line-clamp-2">
+                  
+                  {/* Clean, Easy-to-Understand Description */}
+                  <p className="text-xs text-gray-300 leading-relaxed mt-1.5 line-clamp-2">
                     {project.description}
                   </p>
                 </div>
 
-                {/* Tech Stack Chips with Official TechLogo */}
-                <div className="pt-1">
+                {/* Clean Tech Stack Chips */}
+                <div>
                   <div className="flex flex-wrap gap-1">
                     {project.tags.slice(0, 4).map((t) => (
                       <span
@@ -237,30 +326,13 @@ export default function Projects() {
                   </div>
                 </div>
 
-                {/* Card Actions Footer */}
-                <div className="flex items-center justify-between pt-3 border-t border-white/[0.06] mt-1">
-                  {/* Architecture & Features Modal Trigger */}
-                  <button
-                    onClick={() => openModal(project)}
-                    className="text-[11px] font-mono text-cyan-400 hover:text-white flex items-center gap-1 cursor-pointer group/btn"
-                  >
-                    <Activity className="w-3 h-3 group-hover/btn:scale-110 transition-transform" />
-                    <span>Details</span>
-                  </button>
-
-                  {/* Direct GitHub Code Link */}
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => soundFX.playClick()}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/[0.05] hover:bg-cyan-500/20 text-[11px] font-mono text-gray-200 hover:text-cyan-300 border border-white/10 hover:border-cyan-400/40 transition-all cursor-pointer"
-                    title="Inspect GitHub Repository"
-                  >
-                    <GithubIcon className="w-3 h-3 fill-current text-white" />
-                    <span>Code</span>
-                    <ArrowUpRight className="w-2.5 h-2.5 opacity-60" />
-                  </a>
+                {/* Simple Footer: View Project Architecture (NO Code option on card) */}
+                <div className="pt-2.5 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-cyan-400 group-hover:text-cyan-300">
+                  <span className="flex items-center gap-1.5">
+                    <Activity className="w-3.5 h-3.5" />
+                    <span>View Architecture & Details</span>
+                  </span>
+                  <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </div>
               </div>
             </div>
@@ -268,11 +340,21 @@ export default function Projects() {
         </div>
 
         {/* =========================================================================
-            ARCHITECTURE DEEP-DIVE MODAL (Comprehensive Details on Demand)
+            ARCHITECTURE DEEP-DIVE MODAL (Mounted via Portal at Body Level)
            ========================================================================= */}
-        {selectedProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn">
-            <div className="bg-[#0f141f] max-w-xl w-full rounded-2xl border border-cyan-400/50 p-6 space-y-5 relative max-h-[90vh] overflow-y-auto shadow-2xl">
+        {selectedProject && createPortal(
+          <div
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fadeIn"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                closeModal();
+              }
+            }}
+          >
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#0f141f] max-w-2xl w-full rounded-2xl border border-cyan-400/50 p-6 space-y-5 relative max-h-[90vh] overflow-y-auto shadow-2xl"
+            >
               
               {/* Close Button */}
               <button
@@ -296,8 +378,15 @@ export default function Projects() {
                     {selectedProject.projectType}
                   </span>
                   {selectedProject.isImportant && (
-                    <span className="font-mono text-xs px-2.5 py-0.5 rounded-md bg-amber-950/80 text-amber-300 border border-amber-500/40">
-                      ⭐ Key Project {selectedProject.id === 'furniture-booking' ? '(imp!)' : ''}
+                    <span className="font-mono text-xs px-2.5 py-0.5 rounded-md bg-amber-950/80 text-amber-300 border border-amber-500/40 flex items-center gap-1">
+                      <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                      <span>Key Project {selectedProject.id === 'furniture-booking' ? '(imp!)' : ''}</span>
+                    </span>
+                  )}
+                  {selectedProject.isGroupProject && (
+                    <span className="font-mono text-xs px-2.5 py-0.5 rounded-md bg-purple-950/80 text-purple-300 border border-purple-500/40 flex items-center gap-1">
+                      <Users className="w-3 h-3 text-purple-400" />
+                      <span>Group Project</span>
                     </span>
                   )}
                 </div>
@@ -307,6 +396,15 @@ export default function Projects() {
                 <p className="text-xs font-mono text-cyan-400/80 mt-1">
                   {selectedProject.subtitle}
                 </p>
+              </div>
+
+              {/* Modal Preview Image */}
+              <div className="rounded-xl overflow-hidden border border-white/10 h-52 sm:h-60 w-full bg-[#0a0c10]">
+                <img
+                  src={selectedProject.image}
+                  alt={selectedProject.title}
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
 
               {/* Metrics Highlights Grid */}
@@ -330,22 +428,63 @@ export default function Projects() {
                 </p>
               </div>
 
-              {/* Architecture Blueprint */}
+              {/* =========================================================================
+                  BACKEND SKILLS & SYSTEMS ARCHITECTURE (HIGHLIGHTED DEEP DIVE)
+                 ========================================================================= */}
+              {selectedProject.backendDetails && selectedProject.backendDetails.length > 0 && (
+                <div className="space-y-2 rounded-xl bg-[#0b1019] border border-cyan-500/40 p-4 shadow-inner">
+                  <div className="flex items-center justify-between pb-2 border-b border-cyan-500/20">
+                    <div className="flex items-center gap-2">
+                      <Cpu className="w-4 h-4 text-cyan-400" />
+                      <h4 className="text-xs sm:text-sm font-bold text-white tracking-wide">
+                        Backend Engineering & Systems Architecture
+                      </h4>
+                    </div>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
+                      Golang High-Concurrency
+                    </span>
+                  </div>
+                  
+                  <div className="space-y-2 pt-1">
+                    {selectedProject.backendDetails.map((item, idx) => (
+                      <div key={idx} className="flex items-start gap-2 text-xs text-cyan-100 font-mono leading-relaxed">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1.5 shrink-0 animate-pulse" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Collaborative Group Project Details (If applicable) */}
+              {selectedProject.isGroupProject && (
+                <div className="rounded-xl bg-purple-950/25 border border-purple-500/40 p-3.5 space-y-1.5">
+                  <div className="flex items-center gap-2 text-purple-300 font-bold text-xs sm:text-sm">
+                    <Users className="w-4 h-4 text-purple-400" />
+                    <span>Collaborative Team Architecture</span>
+                  </div>
+                  <p className="text-xs text-purple-200/90 leading-relaxed font-mono">
+                    {selectedProject.groupDetails || "Engineered as a collaborative group initiative. Implemented team Git branching strategies, pull request peer reviews on GitHub, and coordinated full-stack client/server API contracts."}
+                  </p>
+                </div>
+              )}
+
+              {/* Architecture Blueprint Summary */}
               <div className="space-y-1.5">
                 <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
-                  <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>Engineering Architecture</span>
+                  <Terminal className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Architecture Synopsis</span>
                 </h4>
                 <p className="text-xs text-cyan-100 font-mono leading-relaxed bg-[#0b1019] p-3 rounded-lg border border-cyan-500/30">
                   {selectedProject.architecture}
                 </p>
               </div>
 
-              {/* Full Tech Stack List */}
+              {/* Full Tech Stack List with Icons */}
               <div>
                 <h4 className="text-xs font-bold text-white mb-2 flex items-center gap-1.5">
                   <Layers className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Implemented Technologies</span>
+                  <span>Implemented Technologies & Libraries</span>
                 </h4>
                 <div className="flex flex-wrap gap-1.5">
                   {selectedProject.tags.map((t) => (
@@ -385,7 +524,8 @@ export default function Projects() {
                 </a>
               </div>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
 
       </div>

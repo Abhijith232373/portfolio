@@ -4,9 +4,8 @@ import Hero from './components/Hero';
 import EvasiveGopher from './components/EvasiveGopher';
 import Services from './components/Services';
 import Skills from './components/Skills';
-import ArchitectureLab from './components/ArchitectureLab';
 import Projects from './components/Projects';
-import Experience from './components/Experience';
+import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Terminal from './components/Terminal';
@@ -61,7 +60,7 @@ export default function App() {
 
       {/* Main Content Sections */}
       <main>
-        <div id="about" className="relative">
+        <div id="home" className="relative">
           <EvasiveGopher />
           <Hero
             currentTheme={currentTheme}
@@ -77,9 +76,7 @@ export default function App() {
 
         <Projects />
 
-        <ArchitectureLab />
-
-        <Experience />
+        <About />
 
         <Contact />
       </main>

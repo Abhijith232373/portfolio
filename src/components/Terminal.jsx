@@ -89,8 +89,10 @@ Status: ${portfolioData.personal.availability}`
         newHistory.push({
           type: 'output',
           text: `Email: ${portfolioData.personal.email}
+Phone: ${portfolioData.personal.phone}
+LinkedIn: ${portfolioData.personal.linkedin}
 GitHub: ${portfolioData.personal.github}
-LinkedIn: ${portfolioData.personal.linkedin}`
+Instagram: ${portfolioData.personal.instagram}`
         });
         break;
 

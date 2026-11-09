@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { soundFX } from '../utils/audioFX';
 import { TechLogo } from './TechIcons';
 import {
@@ -151,8 +152,29 @@ const skillColumns = [
 
 function SkillColumnCard({ col }) {
   const Icon = col.icon;
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springConfig = { damping: 18, stiffness: 160 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
+  const rotateX = useTransform(springY, [-0.5, 0.5], ["7deg", "-7deg"]);
+  const rotateY = useTransform(springX, [-0.5, 0.5], ["-7deg", "7deg"]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mouseXVal = e.clientX - rect.left;
+    const mouseYVal = e.clientY - rect.top;
+    mouseX.set(mouseXVal / rect.width - 0.5);
+    mouseY.set(mouseYVal / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
   return (
-    <div className={`flex flex-col items-center ${col.waveMargin} w-full transition-all duration-300`}>
+    <div className={`flex flex-col items-center ${col.waveMargin} w-full transition-all duration-300`} style={{ perspective: "1000px" }}>
       {/* Suspended Fiber Data Cable */}
       <div className={`hidden lg:flex flex-col items-center ${col.ropeHeight} w-full transition-all duration-300`}>
         {/* Top Bus Connection Bead */}
@@ -165,15 +187,22 @@ function SkillColumnCard({ col }) {
         <div className="w-5 h-1.5 rounded-t-sm bg-gradient-to-b from-white/60 to-white/30 border border-white/40 shadow-sm" />
       </div>
 
-      {/* The Skill Pillar Card */}
-      <div
+      {/* The Skill Pillar Card with 3D Spring Tilt */}
+      <motion.div
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         onMouseEnter={() => soundFX.playHover()}
-        className={`group w-full rounded-2xl bg-gradient-to-b from-[#13161c] via-[#0f1217] to-[#0a0c10] border border-white/[0.08] ${col.glow} p-4 xl:p-5 flex flex-col justify-between transition-all duration-300 cursor-default hover:-translate-y-2 hover:rotate-[0.35deg] shadow-2xl relative overflow-hidden`}
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d"
+        }}
+        className={`group w-full rounded-2xl bg-gradient-to-b from-[#13161c] via-[#0f1217] to-[#0a0c10] border border-white/[0.08] ${col.glow} p-4 xl:p-5 flex flex-col justify-between transition-shadow duration-300 cursor-default shadow-2xl relative overflow-hidden select-none`}
       >
         {/* Top Edge Gradient Accent Bar */}
         <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${col.topGradient} opacity-40 group-hover:opacity-100 transition-opacity duration-300`} />
 
-        <div>
+        <div style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}>
           {/* Header Row: Icon, Title & Badge */}
           <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/[0.06]">
             <div className="flex items-center gap-2.5">
@@ -223,12 +252,12 @@ function SkillColumnCard({ col }) {
         </div>
 
         {/* Bottom Status Accent Dots */}
-        <div className="pt-3 mt-3 border-t border-white/[0.05] flex items-center gap-1.5">
+        <div className="pt-3 mt-3 border-t border-white/[0.05] flex items-center gap-1.5" style={{ transform: "translateZ(20px)" }}>
           <span className={`w-1.5 h-1.5 rounded-full ${col.dotColor} opacity-70 group-hover:opacity-100 transition-opacity`} />
           <span className="w-1 h-1 rounded-full bg-white/20 group-hover:bg-white/40 transition-colors" />
           <span className="w-1 h-1 rounded-full bg-white/20 group-hover:bg-white/40 transition-colors" />
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
