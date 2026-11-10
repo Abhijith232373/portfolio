@@ -47,8 +47,8 @@ const quickFacts = [
   },
   {
     id: "focus",
-    label: "CORE FOCUS",
-    value: "Go Backend · React · Distributed Systems",
+    label: "CORE PROFICIENCIES",
+    value: "Go Microservices (Fiber/Gin) · gRPC · Kafka · React",
     icon: Layers,
     accent: "text-purple-400"
   },
@@ -137,7 +137,7 @@ function Interactive3DCirclePortrait({ isBlasting }) {
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-88 md:h-88 lg:w-[340px] lg:h-[340px] xl:w-[370px] xl:h-[370px] flex items-center justify-center cursor-pointer [perspective:1000px] select-none group"
+      className="relative w-52 h-52 xs:w-60 xs:h-60 sm:w-80 sm:h-80 md:w-88 md:h-88 lg:w-[340px] lg:h-[340px] xl:w-[370px] xl:h-[370px] flex items-center justify-center cursor-pointer [perspective:1000px] select-none group"
     >
       {/* Pure Borderless 3D Circular Portrait (Frame/Rings Removed) */}
       <div
@@ -189,6 +189,16 @@ function Interactive3DCirclePortrait({ isBlasting }) {
 function NinjaGopherAttackStage() {
   const [attackPhase, setAttackPhase] = useState('idle'); // 'idle' | 'aim' | 'flying' | 'blast'
   const [blastKey, setBlastKey] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const runAttackCycle = () => {
     // 1. Aim / Wind up
@@ -235,7 +245,7 @@ function NinjaGopherAttackStage() {
       {/* =========================================================================
           1. NINJA GOPHER (Positioned generously to the left, ample distance)
          ========================================================================= */}
-      <div className="absolute left-0 sm:-left-6 lg:-left-16 xl:-left-24 bottom-6 sm:bottom-10 lg:bottom-12 z-30 select-none">
+      <div className="absolute left-1 xs:left-3 sm:-left-6 lg:-left-16 xl:-left-24 bottom-3 sm:bottom-10 lg:bottom-12 z-30 select-none">
         <motion.div
           animate={
             attackPhase === 'aim'
@@ -267,11 +277,11 @@ function NinjaGopherAttackStage() {
           <img
             src="/assets/ninja_gopher.png"
             alt="Ninja Go Gopher"
-            className="w-20 h-20 sm:w-24 sm:h-24 lg:w-26 lg:h-26 xl:w-28 xl:h-28 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.9)] pointer-events-none"
+            className="w-16 h-16 sm:w-24 sm:h-24 lg:w-26 lg:h-26 xl:w-28 xl:h-28 object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.9)] pointer-events-none"
           />
 
           {/* Ground shadow beneath feet */}
-          <div className="w-16 sm:w-18 h-2.5 bg-black/60 blur-sm rounded-full -mt-2 pointer-events-none" />
+          <div className="w-12 sm:w-18 h-2 sm:h-2.5 bg-black/60 blur-sm rounded-full -mt-1.5 sm:-mt-2 pointer-events-none" />
         </motion.div>
       </div>
 
@@ -288,16 +298,16 @@ function NinjaGopherAttackStage() {
       {attackPhase === 'flying' && (
         <motion.div
           initial={{
-            left: "calc(50% - 240px)",
-            top: "56%",
-            scale: 0.5,
+            left: isMobile ? "calc(50% - 135px)" : "calc(50% - 240px)",
+            top: isMobile ? "54%" : "56%",
+            scale: isMobile ? 0.45 : 0.5,
             rotate: 0,
             opacity: 1
           }}
           animate={{
-            left: "calc(50% - 110px)",
+            left: isMobile ? "calc(50% - 70px)" : "calc(50% - 110px)",
             top: "50%",
-            scale: 1,
+            scale: isMobile ? 0.85 : 1,
             rotate: 1440,
             opacity: 1
           }}
@@ -322,7 +332,7 @@ function NinjaGopherAttackStage() {
       {isBlasting && (
         <div
           style={{
-            left: "calc(50% - 110px)",
+            left: isMobile ? "calc(50% - 70px)" : "calc(50% - 110px)",
             top: "50%"
           }}
           className="absolute z-50 pointer-events-none -translate-x-1/2 -translate-y-1/2"
@@ -400,34 +410,40 @@ export default function About() {
         {/* =========================================================================
             1. TOP HEADER & INTRODUCTORY BIO (Full Width, Crisp & Professional)
            ========================================================================= */}
-        <div className="mb-6 lg:mb-8 pb-4 border-b border-white/[0.08]">
+        <motion.div
+          initial={{ opacity: 0, x: -35 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-6 lg:mb-8 pb-4 border-b border-white/[0.08]"
+        >
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
            
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
                 About Me
               </h2>
             </div>
 
             <div className="text-left sm:text-right">
-              <span className="text-xs sm:text-sm font-mono text-cyan-300/80 block">
+              <span className="text-[11px] sm:text-sm font-mono text-cyan-300/80 block">
                 Full-Stack Go Developer • Backend Systems Specialist
               </span>
-              <span className="text-xs font-mono text-gray-400 block mt-0.5">
+              <span className="text-[10px] sm:text-xs font-mono text-gray-400 block mt-0.5">
                 {ABOUT_CONFIG.CITY}, Kerala • Open for Immediate Joining
               </span>
             </div>
           </div>
 
-          <p className="text-sm sm:text-base text-gray-300 font-sans leading-relaxed max-w-5xl">
-            I'm <strong className="text-white font-semibold">Abhijith P.R</strong>, a Full-Stack Go Developer based in{" "}
-            <span className="text-amber-300 font-semibold">{ABOUT_CONFIG.CITY}, Kerala</span>. During my 1-year intensive internship at{" "}
+          <p className="text-xs sm:text-base text-gray-300 font-sans leading-relaxed max-w-5xl">
+            I'm <strong className="text-white font-semibold">Abhijith P.R</strong>, a Golang Backend & Full-Stack Developer based in{" "}
+            <span className="text-amber-300 font-semibold">{ABOUT_CONFIG.CITY}, Kerala</span>. During my 1-year intensive engineering internship at{" "}
             <strong className="text-white font-semibold">{ABOUT_CONFIG.COMPANY}</strong> in{" "}
-            <span className="text-cyan-300 font-mono font-medium">{ABOUT_CONFIG.INTERNSHIP_LOCATION}</span> ({ABOUT_CONFIG.INTERNSHIP_DATES}), guided by senior engineering mentorship, I progressed from core fundamentals to engineering production platforms from scratch. I build high-concurrency Go microservices, resilient PostgreSQL databases, and clean, responsive user interfaces in React.
+            <span className="text-cyan-300 font-mono font-medium">{ABOUT_CONFIG.INTERNSHIP_LOCATION}</span> ({ABOUT_CONFIG.INTERNSHIP_DATES}), working in an agile sprint team with daily stand-ups and code reviews, I engineered production platforms from ground up to live deployment. I specialize in building secure <span className="text-cyan-300 font-mono">REST & gRPC microservices in Go (Fiber & Gin)</span> following Clean Architecture, with JWT/RBAC security, Redis sub-millisecond caching, Kafka event streaming, and PostgreSQL persistence with sqlc, paired with responsive single-page interfaces in React.
           </p>
-        </div>
+        </motion.div>
 
         {/* =========================================================================
             2. MAIN CONTENT STAGE (Spacious 2-Column: Photo Left, Cards Right)
@@ -439,7 +455,13 @@ export default function About() {
               LEFT COLUMN: 3D INTERACTIVE CIRCLE PORTRAIT + NINJA GOPHER + COMPACT BUTTONS
               (Ninja Gopher throws shuriken -> hits photo -> blasts on impact on loop)
              ========================================================================= */}
-          <div className="lg:col-span-5 xl:col-span-5 flex flex-col items-center justify-center space-y-5">
+          <motion.div
+            initial={{ opacity: 0, x: -45 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.18 }}
+            transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 xl:col-span-5 flex flex-col items-center justify-center space-y-5"
+          >
             
             {/* Ninja Gopher Throw & Photo Impact Stage */}
             <NinjaGopherAttackStage />
@@ -451,40 +473,46 @@ export default function About() {
                 download="Abhijith_PR_Golang_Developer_Resume.pdf"
                 onClick={() => soundFX.playClick()}
                 onMouseEnter={() => soundFX.playHover()}
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-gray-200 hover:text-white border border-white/15 hover:border-cyan-400/50 text-xs font-mono tracking-wider uppercase shadow-md hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] transition-all transform hover:-translate-y-0.5 cursor-pointer group"
+                className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-1.5 sm:px-5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-gray-200 hover:text-white border border-white/15 hover:border-cyan-400/50 text-[10.5px] sm:text-xs font-mono tracking-wider uppercase shadow-md hover:shadow-[0_0_20px_rgba(6,182,212,0.25)] transition-all transform hover:-translate-y-0.5 cursor-pointer group"
               >
                 <Download className="w-3.5 h-3.5 text-cyan-400 group-hover:translate-y-0.5 transition-transform" />
                 <span>Download Resume</span>
               </a>
             </div>
 
-          </div>
+          </motion.div>
 
           {/* =========================================================================
               RIGHT COLUMN: 4 QUICK FACTS (2x2) + 2 FULL SEPARATION CARDS
              ========================================================================= */}
-          <div className="lg:col-span-7 xl:col-span-7 flex flex-col space-y-4 lg:space-y-5">
+          <motion.div
+            initial={{ opacity: 0, x: 45 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.18 }}
+            transition={{ duration: 0.85, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 xl:col-span-7 flex flex-col space-y-4 lg:space-y-5"
+          >
             
-            {/* Quick Facts Grid (2x2 Grid, Clean & Spacious) */}
-            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
+            {/* Quick Facts Grid (2x2 Grid on Mobile & Desktop) */}
+            <dl className="grid grid-cols-2 gap-2 sm:gap-3.5">
               {quickFacts.map((fact) => {
                 const Icon = fact.icon;
                 return (
                   <div
                     key={fact.id}
                     onMouseEnter={() => soundFX.playHover()}
-                    className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:border-amber-400/40 hover:bg-white/[0.06] transition-all duration-300 shadow-sm flex items-start gap-3 group"
+                    className="p-2 sm:p-4 rounded-xl sm:rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:border-amber-400/40 hover:bg-white/[0.06] transition-all duration-300 shadow-sm flex items-start gap-2 sm:gap-3 group"
                   >
-                    <div className="w-8 h-8 rounded-lg bg-white/[0.05] border border-white/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
-                      <Icon className={`w-4 h-4 ${fact.accent}`} />
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-white/[0.05] border border-white/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+                      <Icon className={`w-3 h-3 sm:w-4 sm:h-4 ${fact.accent}`} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <dt className="text-[10px] font-mono tracking-wider text-gray-400 uppercase">
+                      <dt className="text-[8.5px] sm:text-[10px] font-mono tracking-wider text-gray-400 uppercase">
                         {fact.label}
                       </dt>
-                      <dd className="text-xs sm:text-sm font-medium text-gray-100 mt-0.5 flex items-center gap-1.5 leading-snug">
+                      <dd className="text-[10.5px] sm:text-sm font-medium text-gray-100 mt-0.5 flex items-center gap-1 sm:gap-1.5 leading-snug">
                         {fact.hasPulse && (
-                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                          <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
                         )}
                         <span className="truncate">{fact.value}</span>
                       </dd>
@@ -495,36 +523,36 @@ export default function About() {
             </dl>
 
             {/* DUAL CORE SEPARATION CARDS (Education & Full-Stack Internship) */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4">
               
               {/* --- CARD 1: EDUCATION (2025 BATCH) --- */}
               <div
                 onMouseEnter={() => soundFX.playHover()}
-                className="p-5 sm:p-6 rounded-2xl bg-gradient-to-b from-[#131620]/90 to-[#0e1118]/90 border border-white/[0.08] hover:border-cyan-400/50 hover:bg-[#151926]/90 transition-all duration-300 shadow-xl flex flex-col justify-between group"
+                className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#131620]/90 to-[#0e1118]/90 border border-white/[0.08] hover:border-cyan-400/50 hover:bg-[#151926]/90 transition-all duration-300 shadow-xl flex flex-col justify-between group"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-mono px-3 py-1 rounded-md bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5">
-                      <GraduationCap className="w-4 h-4 text-cyan-400" />
+                  <div className="flex items-center justify-between mb-2.5 sm:mb-3">
+                    <span className="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-md bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5">
+                      <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
                       <span>EDUCATION · {ABOUT_CONFIG.EDUCATION_BATCH}</span>
                     </span>
-                    <Award className="w-4 h-4 text-cyan-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+                    <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400 opacity-60 group-hover:opacity-100 transition-opacity" />
                   </div>
 
-                  <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                  <h3 className="text-sm sm:text-lg font-bold text-white tracking-tight">
                     {ABOUT_CONFIG.EDUCATION_DEGREE}
                   </h3>
                   <p className="text-xs sm:text-sm text-gray-300 mt-1 font-sans">
                     {ABOUT_CONFIG.EDUCATION_COLLEGE}
                   </p>
-                  <p className="text-xs text-gray-400 leading-relaxed mt-2.5 font-sans">
-                    Comprehensive engineering foundations in data structures, relational database management systems, operating systems, computer networking, and algorithmic problem-solving.
+                  <p className="text-[11px] sm:text-xs text-gray-400 leading-relaxed mt-2 sm:mt-2.5 font-sans">
+                    Rigorous engineering foundations in Data Structures & Algorithms, Relational Database Management Systems (PostgreSQL / SQL), Operating Systems, Computer Networking & Protocols, and Object-Oriented Software Design.
                   </p>
                 </div>
 
-                <div className="pt-3 mt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono">
+                <div className="pt-2.5 sm:pt-3 mt-3 sm:mt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono">
                   <span className="text-cyan-300 font-semibold">{ABOUT_CONFIG.EDUCATION_BATCH}</span>
-                  <span className="px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 font-bold text-white">
+                  <span className="px-2 sm:px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 font-bold text-white text-[11px] sm:text-xs">
                     GPA {ABOUT_CONFIG.EDUCATION_GPA}
                   </span>
                 </div>
@@ -533,32 +561,32 @@ export default function About() {
               {/* --- CARD 2: FULL-STACK INTERNSHIP & PRODUCTION PLATFORMS --- */}
               <div
                 onMouseEnter={() => soundFX.playHover()}
-                className="p-5 sm:p-6 rounded-2xl bg-gradient-to-b from-[#161a24]/90 to-[#0f121b]/90 border border-white/[0.08] hover:border-amber-400/50 hover:bg-[#1a1f2e]/90 transition-all duration-300 shadow-xl flex flex-col justify-between group"
+                className="p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#161a24]/90 to-[#0f121b]/90 border border-white/[0.08] hover:border-amber-400/50 hover:bg-[#1a1f2e]/90 transition-all duration-300 shadow-xl flex flex-col justify-between group"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-mono px-3 py-1 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/30 flex items-center gap-1.5">
-                      <Briefcase className="w-4 h-4 text-amber-400" />
+                  <div className="flex items-center justify-between mb-2.5 sm:mb-3">
+                    <span className="text-[11px] sm:text-xs font-mono px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/30 flex items-center gap-1.5">
+                      <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
                       <span>FULL-STACK INTERNSHIP</span>
                     </span>
-                    <Building2 className="w-4 h-4 text-amber-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+                    <Building2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 opacity-60 group-hover:opacity-100 transition-opacity" />
                   </div>
 
-                  <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                  <h3 className="text-sm sm:text-lg font-bold text-white tracking-tight">
                     {ABOUT_CONFIG.INTERNSHIP_ROLE}
                   </h3>
                   <p className="text-xs sm:text-sm text-amber-300/90 mt-1 font-sans font-medium flex items-center gap-1.5">
                     <Building2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                     <span>{ABOUT_CONFIG.COMPANY} • {ABOUT_CONFIG.INTERNSHIP_LOCATION}</span>
                   </p>
-                  <p className="text-xs text-gray-400 leading-relaxed mt-2.5 font-sans">
-                    Senior engineering mentorship & scratch-to-live platform engineering. Key platforms engineered: <strong className="text-gray-200">LendoGo</strong> (digital loan origination) & <strong className="text-gray-200">MoneyMate</strong> (collaborative UPI fintech platform).
+                  <p className="text-[11px] sm:text-xs text-gray-400 leading-relaxed mt-2 sm:mt-2.5 font-sans">
+                    Agile engineering with daily stand-ups, sprint planning, and code reviews. Architected production platforms from scratch: <strong className="text-gray-200">LendoGo</strong> (full-stack loan engine with JWT/RBAC, Kafka events, Redis OTP caching & Razorpay) and <strong className="text-gray-200">MoneyMate</strong> (UPI fintech platform with Go microservices, gRPC, sqlc type-safe queries & Docker CI/CD).
                   </p>
                 </div>
 
-                <div className="pt-3 mt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono">
+                <div className="pt-2.5 sm:pt-3 mt-3 sm:mt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono">
                   <span className="text-amber-300 font-semibold">Agile Sprint Team</span>
-                  <span className="px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 font-bold text-gray-200">
+                  <span className="px-2 sm:px-2.5 py-0.5 rounded-lg bg-white/[0.05] border border-white/10 font-bold text-gray-200 text-[11px] sm:text-xs">
                     {ABOUT_CONFIG.INTERNSHIP_DATES}
                   </span>
                 </div>
@@ -566,7 +594,7 @@ export default function About() {
 
             </div>
 
-          </div>
+          </motion.div>
 
         </div>
 

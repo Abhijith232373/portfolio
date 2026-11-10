@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { soundFX } from '../utils/audioFX';
 import { InteractiveTravelCard } from './ui/3d-card';
 import {
@@ -70,6 +71,30 @@ const serviceCards = [
 ];
 
 export default function Services() {
+  const [activeSlide, setActiveSlide] = React.useState(0);
+  const mobileCarouselRef = React.useRef(null);
+
+  const handleMobileScroll = () => {
+    if (!mobileCarouselRef.current) return;
+    const scrollLeft = mobileCarouselRef.current.scrollLeft;
+    const itemWidth = mobileCarouselRef.current.clientWidth * 0.85;
+    const newIdx = Math.round(scrollLeft / itemWidth);
+    if (newIdx >= 0 && newIdx < serviceCards.length && newIdx !== activeSlide) {
+      setActiveSlide(newIdx);
+    }
+  };
+
+  const scrollToServiceSlide = (index) => {
+    soundFX.playClick();
+    if (!mobileCarouselRef.current) return;
+    const itemWidth = mobileCarouselRef.current.clientWidth * 0.85;
+    mobileCarouselRef.current.scrollTo({
+      left: index * itemWidth,
+      behavior: 'smooth'
+    });
+    setActiveSlide(index);
+  };
+
   const handleServiceClick = (title) => {
     soundFX.playClick();
     const contactSection = document.getElementById('contact');
@@ -81,7 +106,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="min-h-screen w-full relative flex flex-col justify-center items-center py-20 lg:py-16 overflow-hidden bg-[#0d0f12] select-none"
+      className="min-h-screen w-full relative flex flex-col justify-center items-center py-12 sm:py-20 lg:py-16 overflow-hidden bg-[#0d0f12] select-none"
     >
       {/* =========================================================================
           BACKGROUND AMBIENCE
@@ -92,7 +117,13 @@ export default function Services() {
       {/* =========================================================================
           LEFT SIDE ANIMATION (Cyber Radar & Orbital Tech Ring)
          ========================================================================= */}
-      <div className="hidden 2xl:flex absolute left-8 top-1/2 -translate-y-1/2 flex-col items-center gap-6 pointer-events-none z-20 opacity-80">
+      <motion.div
+        initial={{ opacity: 0, x: -40 }}
+        whileInView={{ opacity: 0.8, x: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="hidden 2xl:flex absolute left-8 top-1/2 -translate-y-1/2 flex-col items-center gap-6 pointer-events-none z-20"
+      >
         {/* Orbital Gyroscope */}
         <div className="relative w-24 h-24 flex items-center justify-center">
           <div
@@ -128,12 +159,18 @@ export default function Services() {
           <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
           <span>SYS.TELEMETRY // LIVE</span>
         </div>
-      </div>
+      </motion.div>
 
       {/* =========================================================================
           RIGHT SIDE ANIMATION (Geometric Polyhedron & Matrix Stream)
          ========================================================================= */}
-      <div className="hidden 2xl:flex absolute right-8 top-1/2 -translate-y-1/2 flex-col items-center gap-6 pointer-events-none z-20 opacity-80">
+      <motion.div
+        initial={{ opacity: 0, x: 40 }}
+        whileInView={{ opacity: 0.8, x: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="hidden 2xl:flex absolute right-8 top-1/2 -translate-y-1/2 flex-col items-center gap-6 pointer-events-none z-20"
+      >
         {/* Rotating 3D Wireframe Polyhedron */}
         <div className="relative w-24 h-24 flex items-center justify-center">
           <div
@@ -169,27 +206,39 @@ export default function Services() {
           <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
           <span>V-SYNC // 60 FPS</span>
         </div>
-      </div>
+      </motion.div>
 
       {/* =========================================================================
           MAIN CENTER CONTAINER (Full Page View)
          ========================================================================= */}
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 my-auto">
         
-        {/* Clean, Bold, Minimal Header */}
-        <div className="text-center mb-8 lg:mb-12">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white">
+        {/* Clean, Bold, Minimal Header with Side/Top Scroll Motion */}
+        <motion.div
+          initial={{ opacity: 0, y: -26, x: -20 }}
+          whileInView={{ opacity: 1, y: 0, x: 0 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-5 sm:mb-8 lg:mb-12"
+        >
+          <h2 className="text-2xl sm:text-5xl md:text-6xl font-black tracking-tight text-white">
             Services
           </h2>
-          <p className="text-xs sm:text-sm font-mono text-gray-400 mt-2">
+          <p className="text-[11px] sm:text-sm font-mono text-gray-400 mt-1 sm:mt-2">
             Interactive 3D Solutions & Architectural Engineering
           </p>
-        </div>
+        </motion.div>
 
         {/* =========================================================================
             WAVE SUSPENSION CABLE & 4 3D MODEL CARDS (Single Layer / Row)
            ========================================================================= */}
-        <div className="relative pt-4">
+        <motion.div
+          initial={{ opacity: 0, y: 35, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: false, amount: 0.12 }}
+          transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className="relative pt-4"
+        >
           
           {/* Overhead Horizontal Suspension Cable with Animated Pulse */}
           <div className="hidden lg:block absolute top-4 left-4 right-4 h-[2px]">
@@ -208,8 +257,99 @@ export default function Services() {
             <div className="absolute -right-1 -top-1.5 w-3.5 h-3.5 rounded-full border border-amber-400/60 bg-zinc-900 shadow-[0_0_8px_rgba(245,158,11,0.4)]" />
           </div>
 
-          {/* 4 Cards Grid: Single Row / Layer on Desktop with 3D Tilt & Parallax */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 xl:gap-7 items-start">
+          {/* =========================================================================
+              MOBILE ONLY: SMOOTH HORIZONTAL SWIPE CAROUSEL (sm:hidden)
+              - 84vw width cards with peek of next card
+              - Clean layout, full readability, no cramped text
+              - Active slide indicator dots & swipe hint
+             ========================================================================= */}
+          <div className="sm:hidden w-full">
+            <div
+              ref={mobileCarouselRef}
+              onScroll={handleMobileScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory gap-3.5 no-scrollbar px-1 pb-3 pt-1"
+            >
+              {serviceCards.map((card) => {
+                const Icon = card.icon;
+                return (
+                  <div
+                    key={card.id}
+                    className="w-[84vw] max-w-[315px] shrink-0 snap-center rounded-2xl bg-[#11141c] border border-white/10 shadow-2xl overflow-hidden flex flex-col justify-between p-4 relative group"
+                  >
+                    {/* Top Image Banner with Badges */}
+                    <div className="relative h-36 -mx-4 -mt-4 mb-3 overflow-hidden bg-[#0c1017]">
+                      <img
+                        src={card.imageUrl}
+                        alt={card.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#11141c] via-[#11141c]/40 to-transparent" />
+
+                      {/* Number Pill */}
+                      <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-black/75 backdrop-blur-md border border-cyan-400/40 text-[10.5px] font-mono text-cyan-300 font-bold">
+                        {card.number}
+                      </span>
+
+                      {/* Icon Container */}
+                      <div className="absolute top-2.5 right-2.5 w-8 h-8 rounded-lg bg-black/75 backdrop-blur-md border border-white/15 flex items-center justify-center text-white">
+                        <Icon className="w-4 h-4 text-cyan-300" />
+                      </div>
+                    </div>
+
+                    {/* Middle Content */}
+                    <div className="flex-1 flex flex-col">
+                      <h3 className="text-base font-bold text-white tracking-tight leading-snug">
+                        {card.title}
+                      </h3>
+                      <p className="text-[11px] font-mono text-cyan-300/90 mt-1">
+                        {card.subtitle}
+                      </p>
+                      <p className="text-xs text-gray-300 font-sans leading-relaxed mt-2.5">
+                        {card.explain}
+                      </p>
+                    </div>
+
+                    {/* Bottom CTA Button */}
+                    <button
+                      onClick={() => handleServiceClick(card.title)}
+                      className="mt-4 flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] border border-white/15 text-white text-xs font-semibold tracking-wider uppercase active:scale-95 transition-all cursor-pointer"
+                    >
+                      <span>{card.actionText}</span>
+                      <span className="text-cyan-400 font-bold text-sm">↗</span>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Carousel Dots & Swipe Hint */}
+            <div className="flex flex-col items-center justify-center gap-1.5 mt-3 select-none">
+              <div className="flex items-center gap-2">
+                {serviceCards.map((card, idx) => (
+                  <button
+                    key={card.id}
+                    onClick={() => scrollToServiceSlide(idx)}
+                    aria-label={`Go to service ${idx + 1}`}
+                    className={`transition-all duration-300 rounded-full cursor-pointer ${
+                      activeSlide === idx
+                        ? 'w-6 h-1.5 bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]'
+                        : 'w-1.5 h-1.5 bg-white/25 hover:bg-white/50'
+                    }`}
+                  />
+                ))}
+              </div>
+              <span className="text-[10px] font-mono text-white/40 tracking-wider uppercase">
+                Swipe cards to explore
+              </span>
+            </div>
+          </div>
+
+          {/* =========================================================================
+              DESKTOP ONLY: 4 CARDS GRID WITH OVERHEAD SUSPENSION CABLE (hidden sm:grid)
+              - 100% UNCHANGED AND PRESERVED FOR WEBSITE VIEW
+             ========================================================================= */}
+          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 xl:gap-7 items-stretch">
             {serviceCards.map((card) => (
               <div
                 key={card.id}
@@ -222,7 +362,7 @@ export default function Services() {
                   <div className="w-4 h-1.5 rounded-t-sm bg-gradient-to-b from-white/60 to-white/30 border border-white/40 shadow-sm" />
                 </div>
 
-                {/* 3D Tilt Model Card with Parallax Depth Layers */}
+                {/* 3D Tilt Model Card with Parallax Depth Layers (Grand on Desktop) */}
                 <InteractiveTravelCard
                   title={card.title}
                   subtitle={card.subtitle}
@@ -233,13 +373,13 @@ export default function Services() {
                   actionText={card.actionText}
                   href={card.href}
                   onActionClick={() => handleServiceClick(card.title)}
-                  className="h-[27rem] sm:h-[28rem]"
+                  className="h-[28rem]"
                 />
               </div>
             ))}
           </div>
 
-        </div>
+        </motion.div>
 
       </div>
     </section>

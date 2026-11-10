@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { soundFX } from '../utils/audioFX';
 import { TechLogo } from './TechIcons';
@@ -197,49 +197,49 @@ function SkillColumnCard({ col }) {
           rotateY,
           transformStyle: "preserve-3d"
         }}
-        className={`group w-full rounded-2xl bg-gradient-to-b from-[#13161c] via-[#0f1217] to-[#0a0c10] border border-white/[0.08] ${col.glow} p-4 xl:p-5 flex flex-col justify-between transition-shadow duration-300 cursor-default shadow-2xl relative overflow-hidden select-none`}
+        className={`group w-full rounded-xl sm:rounded-2xl bg-gradient-to-b from-[#13161c] via-[#0f1217] to-[#0a0c10] border border-white/[0.08] ${col.glow} p-3 sm:p-4 xl:p-5 flex flex-col justify-between transition-shadow duration-300 cursor-default shadow-2xl relative overflow-hidden select-none`}
       >
         {/* Top Edge Gradient Accent Bar */}
         <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${col.topGradient} opacity-40 group-hover:opacity-100 transition-opacity duration-300`} />
 
         <div style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}>
           {/* Header Row: Icon, Title & Badge */}
-          <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/[0.06]">
-            <div className="flex items-center gap-2.5">
-              <div className={`w-8 h-8 rounded-lg ${col.iconBg} border flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-sm`}>
-                <Icon className="w-4 h-4" />
+          <div className="flex items-center justify-between pb-2.5 sm:pb-3 mb-2.5 sm:mb-3 border-b border-white/[0.06]">
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-lg ${col.iconBg} border flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-sm`}>
+                <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
               <div>
-                <span className="font-mono text-[10px] text-white/40 block leading-none mb-1">
+                <span className="font-mono text-[9px] sm:text-[10px] text-white/40 block leading-none mb-0.5 sm:mb-1">
                   {col.number}
                 </span>
-                <h3 className="text-sm sm:text-base font-bold text-white tracking-tight leading-tight">
+                <h3 className="text-xs sm:text-base font-bold text-white tracking-tight leading-tight">
                   {col.title}
                 </h3>
               </div>
             </div>
 
-            <span className={`text-[9px] font-mono px-2 py-0.5 rounded-md border ${col.badgeColor} shrink-0`}>
+            <span className={`text-[8.5px] sm:text-[9px] font-mono px-1.5 sm:px-2 py-0.5 rounded-md border ${col.badgeColor} shrink-0`}>
               {col.badge}
             </span>
           </div>
 
           {/* Simply Listed Skills Chips (Clean, Professional & Compact) */}
-          <div className="space-y-1.5">
+          <div className="space-y-1 sm:space-y-1.5">
             {col.skills.map((s) => (
               <div
                 key={s.name}
-                className={`flex items-center gap-2 px-2.5 py-1 rounded-lg border transition-all duration-150 ${
+                className={`flex items-center gap-1.5 sm:gap-2 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg border transition-all duration-150 ${
                   s.highlight
                     ? 'bg-white/[0.04] border-white/[0.14] hover:border-white/40 hover:bg-white/[0.08]'
                     : 'bg-transparent border-transparent hover:bg-white/[0.03] hover:border-white/[0.08]'
                 }`}
               >
-                <div className="w-4 h-4 flex items-center justify-center shrink-0">
-                  <TechLogo name={s.name} className="w-3.5 h-3.5" />
+                <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex items-center justify-center shrink-0">
+                  <TechLogo name={s.name} className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 </div>
 
-                <span className="text-xs text-gray-300 group-hover:text-white font-medium truncate">
+                <span className="text-[11px] sm:text-xs text-gray-300 group-hover:text-white font-medium truncate">
                   {s.name}
                 </span>
 
@@ -263,10 +263,14 @@ function SkillColumnCard({ col }) {
 }
 
 export default function Skills() {
+  const [activeTab, setActiveTab] = useState(0);
+  const activeCol = skillColumns[activeTab];
+  const ActiveIcon = activeCol.icon;
+
   return (
     <section
       id="skills"
-      className="min-h-screen w-full relative flex flex-col justify-center items-center py-16 lg:py-6 overflow-hidden bg-[#0a0c0f] select-none"
+      className="min-h-screen w-full relative flex flex-col justify-center items-center py-10 sm:py-16 lg:py-6 overflow-hidden bg-[#0a0c0f] select-none"
     >
       {/* Background Ambience */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/5 blur-[150px] pointer-events-none rounded-full" />
@@ -275,7 +279,13 @@ export default function Skills() {
       {/* =========================================================================
           LEFT SIDE TELEMETRY ANIMATION (Cyber Matrix CPU Node)
          ========================================================================= */}
-      <div className="hidden 2xl:flex absolute left-8 top-1/2 -translate-y-1/2 flex-col items-center gap-6 pointer-events-none z-20 opacity-80">
+      <motion.div
+        initial={{ opacity: 0, x: -40 }}
+        whileInView={{ opacity: 0.8, x: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="hidden 2xl:flex absolute left-8 top-1/2 -translate-y-1/2 flex-col items-center gap-6 pointer-events-none z-20"
+      >
         {/* Rotating CPU Core */}
         <div className="relative w-24 h-24 flex items-center justify-center">
           <div
@@ -311,12 +321,18 @@ export default function Skills() {
           <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
           <span>STACK.MATRIX // ACTIVE</span>
         </div>
-      </div>
+      </motion.div>
 
       {/* =========================================================================
           RIGHT SIDE TELEMETRY ANIMATION (Git Mesh & Network Sphere)
          ========================================================================= */}
-      <div className="hidden 2xl:flex absolute right-8 top-1/2 -translate-y-1/2 flex-col items-center gap-6 pointer-events-none z-20 opacity-80">
+      <motion.div
+        initial={{ opacity: 0, x: 40 }}
+        whileInView={{ opacity: 0.8, x: 0 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="hidden 2xl:flex absolute right-8 top-1/2 -translate-y-1/2 flex-col items-center gap-6 pointer-events-none z-20"
+      >
         {/* Rotating Network Orbit */}
         <div className="relative w-24 h-24 flex items-center justify-center">
           <div
@@ -352,24 +368,128 @@ export default function Skills() {
           <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
           <span>VERIFIED // 100% READY</span>
         </div>
-      </div>
+      </motion.div>
 
       {/* =========================================================================
           MAIN CENTER CONTAINER (Full Width Utilization)
          ========================================================================= */}
       <div className="w-full max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 my-auto">
         
-        {/* Clean, Bold, Minimal Header */}
-        <div className="text-center mb-6 lg:mb-8">
-          <h2 className="text-4xl sm:text-5xl font-black tracking-tight text-white">
+        {/* Clean, Bold, Minimal Header with Side/Top Scroll Motion */}
+        <motion.div
+          initial={{ opacity: 0, y: -25, x: 20 }}
+          whileInView={{ opacity: 1, y: 0, x: 0 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-4 sm:mb-6 lg:mb-8"
+        >
+          <h2 className="text-2xl sm:text-5xl font-black tracking-tight text-white">
             Skills
           </h2>
-        </div>
+          <p className="text-[10.5px] sm:text-sm font-mono text-gray-400 mt-1 sm:hidden">
+            Tap a category to inspect engineering stack
+          </p>
+        </motion.div>
 
         {/* =========================================================================
-            CYBER CONDUIT & SUSPENDED SKILL PILLARS (Wave Model with AI Integration)
+            MOBILE VIEW (sm:hidden): Native Category Tab Switcher & 2-Col Skill Chips
            ========================================================================= */}
-        <div className="relative pt-5">
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.12 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="sm:hidden w-full"
+        >
+          {/* Category Tabs */}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-2 mb-3">
+            {skillColumns.map((col, idx) => {
+              const ColIcon = col.icon;
+              const isActive = activeTab === idx;
+              return (
+                <button
+                  key={col.id}
+                  onClick={() => {
+                    soundFX.playClick();
+                    setActiveTab(idx);
+                  }}
+                  className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono transition-all border cursor-pointer ${
+                    isActive
+                      ? 'bg-amber-400/20 border-amber-400 text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.25)] font-bold'
+                      : 'bg-[#121620]/80 border-white/[0.08] text-gray-400 hover:text-white'
+                  }`}
+                >
+                  <ColIcon className="w-3.5 h-3.5" />
+                  <span>{col.title}</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-white/10 text-gray-300">
+                    {col.skills.length}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active Category Card */}
+          <div className="w-full rounded-2xl bg-gradient-to-b from-[#13161c] via-[#0f1217] to-[#0a0c10] border border-white/[0.1] p-3.5 shadow-2xl relative overflow-hidden">
+            {/* Top Accent Gradient */}
+            <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${activeCol.topGradient}`} />
+
+            {/* Header */}
+            <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-white/[0.06]">
+              <div className="flex items-center gap-2">
+                <div className={`w-8 h-8 rounded-lg ${activeCol.iconBg} border flex items-center justify-center shrink-0`}>
+                  <ActiveIcon className="w-4 h-4" />
+                </div>
+                <div>
+                  <span className="font-mono text-[9px] text-white/40 block leading-none mb-0.5">
+                    CATEGORY {activeCol.number} OF 05
+                  </span>
+                  <h3 className="text-sm font-bold text-white tracking-tight">
+                    {activeCol.title}
+                  </h3>
+                </div>
+              </div>
+              <span className={`text-[9px] font-mono px-2 py-0.5 rounded-md border ${activeCol.badgeColor}`}>
+                {activeCol.badge}
+              </span>
+            </div>
+
+            {/* Clean 2-Column Skill Chips */}
+            <div className="grid grid-cols-2 gap-1.5">
+              {activeCol.skills.map((s) => (
+                <div
+                  key={s.name}
+                  className={`flex items-center gap-1.5 px-2 py-1.5 rounded-lg border transition-all ${
+                    s.highlight
+                      ? 'bg-white/[0.05] border-white/[0.14] text-white font-medium'
+                      : 'bg-white/[0.02] border-white/[0.06] text-gray-300'
+                  }`}
+                >
+                  <div className="w-3.5 h-3.5 flex items-center justify-center shrink-0">
+                    <TechLogo name={s.name} className="w-3 h-3" />
+                  </div>
+                  <span className="text-[11px] truncate flex-1">
+                    {s.name}
+                  </span>
+                  {s.highlight && (
+                    <span className={`w-1 h-1 rounded-full ${activeCol.dotColor} shrink-0`} />
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* =========================================================================
+            DESKTOP VIEW (hidden sm:block): Full 5-Column High-Tech Grid & Cyber Cable
+           ========================================================================= */}
+        <motion.div
+          initial={{ opacity: 0, y: 38, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: false, amount: 0.12 }}
+          transition={{ duration: 0.85, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className="hidden sm:block relative pt-5"
+        >
           
           {/* Overhead Horizontal High-Tech Data Bus Cable */}
           <div className="hidden lg:block absolute top-5 left-4 right-4 h-[2px]">
@@ -387,7 +507,7 @@ export default function Skills() {
             <div className="absolute -right-1 -top-1.5 w-3.5 h-3.5 rounded-full border border-cyan-400/60 bg-zinc-900 shadow-[0_0_8px_rgba(6,182,212,0.4)]" />
           </div>
 
-          {/* 5-Column High-Tech Grid Architecture */}
+          {/* 5-Column High-Tech Grid Architecture: Full Desktop Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 xl:gap-5 items-start">
             
             {/* Column 1: Backend */}
@@ -522,7 +642,7 @@ export default function Skills() {
 
           </div>
 
-        </div>
+        </motion.div>
 
       </div>
     </section>

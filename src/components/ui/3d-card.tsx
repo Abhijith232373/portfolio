@@ -95,8 +95,8 @@ export const InteractiveTravelCard = React.forwardRef<
             transformStyle: "preserve-3d",
           }}
           className={cn(
-            // Base styles for the card container, using theme variables for border
-            "relative h-[28rem] w-full max-w-sm rounded-2xl bg-[#0e121a]/80 shadow-2xl border border-white/10 group select-none transition-shadow hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)]",
+            // Base styles for the card container: sleek & compact 2-col on mobile, luxury editorial on desktop
+            "relative h-[14rem] sm:h-[28rem] w-full max-w-sm rounded-xl sm:rounded-2xl bg-[#0e121a]/80 shadow-2xl border border-white/10 group select-none transition-shadow hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)]",
             className
           )}
         >
@@ -105,7 +105,7 @@ export const InteractiveTravelCard = React.forwardRef<
               transform: "translateZ(45px)",
               transformStyle: "preserve-3d",
             }}
-            className="absolute inset-3 grid h-[calc(100%-1.5rem)] w-[calc(100%-1.5rem)] grid-rows-[1fr_auto] rounded-xl overflow-hidden shadow-lg border border-white/10"
+            className="absolute inset-1.5 sm:inset-3 grid h-[calc(100%-0.75rem)] sm:h-[calc(100%-1.5rem)] w-[calc(100%-0.75rem)] sm:w-[calc(100%-1.5rem)] grid-rows-[1fr_auto] rounded-lg sm:rounded-xl overflow-hidden shadow-lg border border-white/10"
           >
             {/* Background Image */}
             <img
@@ -121,16 +121,16 @@ export const InteractiveTravelCard = React.forwardRef<
             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
 
             {/* Card Content (Header, Body & Footer) */}
-            <div className="relative flex flex-col justify-between rounded-xl p-5 text-white z-10">
+            <div className="relative flex flex-col justify-between rounded-lg sm:rounded-xl p-2.5 sm:p-5 text-white z-10">
               
               {/* Header section with Number / Icon and Action Link */}
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2.5">
+                <div className="flex items-center justify-between mb-1.5 sm:mb-4">
+                  <div className="flex items-center gap-1.5 sm:gap-2.5">
                     {number && (
                       <motion.span
                         style={{ transform: "translateZ(55px)" }}
-                        className="font-mono text-xs font-bold tracking-widest px-2.5 py-1 rounded-md bg-black/60 backdrop-blur-md border border-white/15 text-white/90"
+                        className="font-mono text-[9px] sm:text-xs font-bold tracking-widest px-1.5 sm:px-2.5 py-0.2 sm:py-1 rounded bg-black/60 backdrop-blur-md border border-white/15 text-white/90"
                       >
                         {number}
                       </motion.span>
@@ -138,9 +138,9 @@ export const InteractiveTravelCard = React.forwardRef<
                     {Icon && (
                       <motion.div
                         style={{ transform: "translateZ(55px)" }}
-                        className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white"
+                        className="w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white"
                       >
-                        <Icon className="w-4 h-4" />
+                        <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
                       </motion.div>
                     )}
                   </div>
@@ -153,9 +153,9 @@ export const InteractiveTravelCard = React.forwardRef<
                     whileTap={{ scale: 0.9 }}
                     aria-label={`Learn more about ${title}`}
                     style={{ transform: "translateZ(60px)" }}
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15 backdrop-blur-md ring-1 ring-inset ring-white/30 transition-all hover:bg-white/30 cursor-pointer shadow-lg"
+                    className="flex h-6 w-6 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white/15 backdrop-blur-md ring-1 ring-inset ring-white/30 transition-all hover:bg-white/30 cursor-pointer shadow-lg"
                   >
-                    <ArrowUpRight className="h-4 w-4 text-white" />
+                    <ArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
                   </motion.a>
                 </div>
 
@@ -163,13 +163,13 @@ export const InteractiveTravelCard = React.forwardRef<
                 <div>
                   <motion.h2 
                     style={{ transform: "translateZ(50px)" }}
-                    className="text-xl sm:text-2xl font-bold tracking-tight text-white drop-shadow-md"
+                    className="text-xs sm:text-2xl font-bold tracking-tight text-white drop-shadow-md line-clamp-1 sm:line-clamp-none"
                   >
                     {title}
                   </motion.h2>
                   <motion.p 
                     style={{ transform: "translateZ(40px)" }}
-                    className="text-xs font-mono font-medium text-cyan-300 mt-1 drop-shadow"
+                    className="text-[9px] sm:text-xs font-mono font-medium text-cyan-300 mt-0.5 sm:mt-1 drop-shadow line-clamp-1"
                   >
                     {subtitle}
                   </motion.p>
@@ -179,22 +179,22 @@ export const InteractiveTravelCard = React.forwardRef<
                 {description && (
                   <motion.p
                     style={{ transform: "translateZ(35px)" }}
-                    className="text-xs text-gray-200/90 leading-relaxed mt-3 line-clamp-3 font-sans drop-shadow-sm"
+                    className="text-[9.5px] sm:text-xs text-gray-200/90 leading-snug sm:leading-relaxed mt-1 sm:mt-3 line-clamp-2 sm:line-clamp-3 font-sans drop-shadow-sm"
                   >
                     {description}
                   </motion.p>
                 )}
               </div>
 
-              {/* Footer Button */}
-              <div className="pt-4">
+              {/* Footer Button: Compact 2-col on mobile, grand on desktop */}
+              <div className="pt-1.5 sm:pt-4">
                 <motion.button
                   onClick={onActionClick}
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}
                   style={{ transform: "translateZ(45px)" }}
                   className={cn(
-                    "w-full rounded-xl py-2.5 text-center text-xs sm:text-sm font-semibold text-white transition-all cursor-pointer shadow-lg",
+                    "w-full rounded-md sm:rounded-xl py-1 sm:py-2.5 text-center text-[9.5px] sm:text-sm font-semibold text-white transition-all cursor-pointer shadow-lg",
                     "bg-white/15 backdrop-blur-md ring-1 ring-inset ring-white/25 hover:bg-white/25 hover:ring-white/40 active:bg-white/30"
                   )}
                 >

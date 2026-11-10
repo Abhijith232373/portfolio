@@ -42,15 +42,9 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   };
 
-  const scrollToContact = (e) => {
-    e.preventDefault();
-    soundFX.playClick();
-    setMobileMenuOpen(false);
-    const el = document.getElementById('contact');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const WHATSAPP_NUMBER = "918590988810"; // country code + number, no + or spaces
+  const WHATSAPP_MESSAGE = "Hi Abhijith, I saw your portfolio and would like to talk.";
+  const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
 
   return (
     <>
@@ -101,11 +95,14 @@ export default function Navbar() {
               })}
             </div>
 
-            {/* Pill Button: LET'S TALK */}
+            {/* Pill Button: LET'S TALK (Redirects directly to WhatsApp Chat) */}
             <a
-              href="#contact"
-              onClick={scrollToContact}
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => soundFX.playClick()}
               className="group relative inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full bg-white text-black font-semibold text-xs tracking-wider uppercase shadow-md hover:bg-neutral-200 hover:scale-[1.03] active:scale-[0.98] transition-all cursor-pointer"
+              title="Chat directly on WhatsApp"
             >
               <span>LET'S TALK</span>
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -128,30 +125,36 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* ---------------- MOBILE DRAWER MENU ---------------- */}
+      {/* ---------------- MOBILE DRAWER MENU (Small, Compact Dropdown) ---------------- */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-4 top-20 z-50 p-6 rounded-2xl bg-[#0e1014]/95 backdrop-blur-2xl border border-white/15 shadow-2xl space-y-4 animate-fade-in select-none">
-          <div className="flex flex-col gap-3">
+        <div className="md:hidden fixed right-4 top-16 z-50 w-48 p-2.5 rounded-xl bg-[#0e1014]/95 backdrop-blur-2xl border border-white/15 shadow-2xl space-y-2 animate-fade-in select-none">
+          <div className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
-                className="text-sm tracking-[0.2em] font-medium text-white/70 hover:text-white py-2 px-3 rounded-lg hover:bg-white/[0.06] transition-colors"
+                className="text-xs tracking-[0.18em] font-medium text-white/75 hover:text-white py-1.5 px-2.5 rounded-md hover:bg-white/[0.08] transition-colors"
               >
                 {link.name}
               </a>
             ))}
           </div>
 
-          <div className="pt-2 border-t border-white/10">
+          <div className="pt-1.5 border-t border-white/10">
             <a
-              href="#contact"
-              onClick={scrollToContact}
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-full bg-white text-black font-semibold text-xs tracking-wider uppercase shadow-md active:scale-95 transition-transform"
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                soundFX.playClick();
+                setMobileMenuOpen(false);
+              }}
+              className="flex items-center justify-center gap-1.5 w-full py-2 rounded-full bg-white text-black font-semibold text-[11px] tracking-wider uppercase shadow-md active:scale-95 transition-transform"
+              title="Chat directly on WhatsApp"
             >
               <span>LET'S TALK</span>
-              <ArrowUpRight className="w-4 h-4" />
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
           </div>
         </div>

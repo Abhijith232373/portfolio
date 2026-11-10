@@ -9,10 +9,11 @@ export default function EvasiveGopher() {
   useEffect(() => {
     const container = mountRef.current;
     if (!container) return;
+    if (window.innerWidth < 768) return;
 
     let animationFrameId;
-    let width = container.clientWidth;
-    let height = container.clientHeight;
+    let width = container.clientWidth || window.innerWidth;
+    let height = container.clientHeight || window.innerHeight;
 
     // 1. Scene, Camera, Renderer
     const scene = new THREE.Scene();
@@ -400,7 +401,7 @@ export default function EvasiveGopher() {
   return (
     <div
       ref={mountRef}
-      className="absolute inset-0 w-full h-screen pointer-events-none z-30 overflow-hidden"
+      className="hidden md:block absolute inset-0 w-full h-screen pointer-events-none z-30 overflow-hidden"
       style={{ willChange: 'transform' }}
     />
   );

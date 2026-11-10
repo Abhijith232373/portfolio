@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import PortfolioBackgroundCanvas from './components/PortfolioBackgroundCanvas';
 import EvasiveGopher from './components/EvasiveGopher';
 import Services from './components/Services';
 import Skills from './components/Skills';
@@ -50,7 +51,10 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-white selection:bg-amber-500/30 selection:text-amber-200">
+    <div className="min-h-screen bg-background text-white selection:bg-amber-500/30 selection:text-amber-200 relative">
+      {/* Full Portfolio Ambient Stars & Spider-Net Constellation Canvas */}
+      <PortfolioBackgroundCanvas theme={currentTheme} />
+
       {/* Top Floating Navbar with Contact CTA */}
       <Navbar
         currentTheme={currentTheme}

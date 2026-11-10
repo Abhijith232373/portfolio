@@ -159,6 +159,15 @@ body {
   background: var(--accent-primary);
 }
 
+/* Hide scrollbar for clean horizontal pill bars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Standard Animations */
 @keyframes pulseGlow {
   0%, 100% {
@@ -271,3 +280,43 @@ body {
 .bg-secondary { background-color: var(--bg-secondary); }
 .text-muted-foreground { color: var(--text-muted); }
 .border-border { border-color: var(--border-color); }
+
+/* Infinite Auto-Moving Marquee for Mobile Projects */
+@keyframes marqueeScrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes marqueeScrollLeft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-right {
+  animation: marqueeScrollRight 26s linear infinite;
+}
+
+.animate-marquee-slow-right {
+  animation: marqueeScrollRight 32s linear infinite;
+}
+
+.animate-marquee-left {
+  animation: marqueeScrollLeft 26s linear infinite;
+}
+
+.marquee-paused {
+  animation-play-state: paused !important;
+}
+
+.marquee-track:hover,
+.marquee-track:active {
+  animation-play-state: paused;
+}

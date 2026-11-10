@@ -1,23 +1,24 @@
 export const portfolioData = {
   personal: {
-    name: "Abhijith PR",
+    name: "Abhijith P.R",
     handle: "@abhijithpr",
-    title: "Fullstack Developer",
-    tagline: "Crafting resilient fullstack systems, high-throughput cloud backends, and immersive interactive web experiences.",
-    availability: "Available for high-impact roles & engineering projects",
-    location: "Global / Remote",
+    title: "Golang Backend Developer",
+    tagline: "Golang backend developer experienced in building secure REST & gRPC APIs with clean architecture, event-driven Kafka systems, PostgreSQL, Redis, Docker, and AWS.",
+    availability: "Actively seeking full-time roles & engineering opportunities",
+    location: "Kottayam, Kerala, India",
     avatar: "/assets/bgme_cutout.png",
     email: "abhijithpr366@gmail.com",
     phone: "+91 8590988810",
+    whatsapp: "https://wa.me/918590988810?text=Hi%20Abhijith%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20talk.",
     github: "https://github.com/Abhijith232373",
     linkedin: "https://www.linkedin.com/in/abhijith-p-r--/",
     instagram: "https://www.instagram.com/_.abhi_jith_._/",
     twitter: "https://x.com",
     stats: [
-      { label: "Production Uptime", value: "99.99%" },
-      { label: "Microservices Architected", value: "24+" },
-      { label: "Peak QPS Handled", value: "85K/s" },
-      { label: "Years Engineering", value: "4+" }
+      { label: "Core Backend", value: "Golang" },
+      { label: "Internship Experience", value: "1 Year" },
+      { label: "Flagship Platforms", value: "LendoGo & MoneyMate" },
+      { label: "Education Batch", value: "2025" }
     ]
   },
 
@@ -525,35 +526,16 @@ export const portfolioData = {
 
   experience: [
     {
-      period: "2023 — Present",
-      role: "Lead Full-Stack & Systems Engineer",
-      company: "CloudScale Systems",
-      location: "San Francisco / Remote",
+      period: "Jun 2025 — Sep 2026",
+      role: "Golang Backend Developer (Intern)",
+      company: "Bridgeon Solutions",
+      location: "Kochi, Kerala",
       highlights: [
-        "Architected and deployed high-throughput microservices handling 85M+ daily requests with 99.99% availability.",
-        "Engineered real-time WebGL observability dashboard, cutting incident mean-time-to-resolution (MTTR) by 42%.",
-        "Mentored a team of 8 engineers and spearheaded adoption of TypeScript, Go, and automated CI/CD pipelines."
-      ]
-    },
-    {
-      period: "2022 — 2023",
-      role: "Senior Software Engineer",
-      company: "Nexus Digital Labs",
-      location: "Bangalore / Hybrid",
-      highlights: [
-        "Designed distributed caching layers with Redis and PostgreSQL, reducing p99 API latency from 280ms to 24ms.",
-        "Built resilient event-driven data ingestion pipeline utilizing Apache Kafka processing 12,000 events/sec.",
-        "Implemented end-to-end OAuth2/OIDC security architecture with zero critical vulnerabilities reported."
-      ]
-    },
-    {
-      period: "2020 — 2022",
-      role: "Full-Stack Developer",
-      company: "Quantum Interactive",
-      location: "Remote",
-      highlights: [
-        "Developed modern customer-facing web platforms utilizing React, Next.js, and interactive 3D WebGL components.",
-        "Integrated robust Stripe billing systems and RESTful API endpoints powering enterprise SaaS clients."
+        "Worked in an agile engineering team with sprint planning, daily stand-ups, and thorough peer code reviews.",
+        "Designed and built secure, high-throughput REST and gRPC APIs using clean architecture with JWT authentication and role-based access control (RBAC).",
+        "Engineered event-driven systems using Apache Kafka, PostgreSQL, and Redis sub-millisecond in-memory caching.",
+        "Deployed containerized microservices and modular monoliths using Docker, CI/CD pipelines, and AWS (EC2, S3).",
+        "Took full-stack features from relational database schema design to production, building responsive dashboards across the stack with React."
       ]
     }
   ],
