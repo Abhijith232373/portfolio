@@ -157,6 +157,29 @@ export function CronIcon({ className = "w-5 h-5" }) {
   );
 }
 
+// Golang Concurrency (Goroutines & Channels)
+export function ConcurrencyIcon({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="5" cy="12" r="2" fill="#00ACD7" stroke="#00ACD7"/>
+      <path d="M7 12h4l3-6h5M11 12l3 6h5M11 12h8" stroke="#00E5FF"/>
+      <polyline points="17 4 19 6 17 8" stroke="#00E5FF"/>
+      <polyline points="17 10 19 12 17 14" stroke="#00E5FF"/>
+      <polyline points="17 16 19 18 17 20" stroke="#00E5FF"/>
+    </svg>
+  );
+}
+
+// SMTP Mail Protocol
+export function SmtpIcon({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="5" width="18" height="14" rx="2" stroke="#34d399"/>
+      <polyline points="3 7 12 13 21 7" stroke="#34d399"/>
+    </svg>
+  );
+}
+
 // Razorpay Payment
 export function RazorpayIcon({ className = "w-5 h-5" }) {
   return (
@@ -389,6 +412,7 @@ export function TechLogo({ name, className = "w-5 h-5" }) {
   if (n.includes("prompt")) return <PromptEngineerIcon className={className} />;
   if (n.includes("pair")) return <PairProgIcon className={className} />;
   if (n.includes("ai-assisted") || n.includes("ai assisted")) return <AiDevIcon className={className} />;
+  if (n.includes("concurren")) return <ConcurrencyIcon className={className} />;
   if (n.includes("golang") || n === "go") return <GolangIcon className={className} />;
   if (n === "sql") return <SqlIcon className={className} />;
   if (n.includes("fiber")) return <FiberIcon className={className} />;
@@ -404,6 +428,7 @@ export function TechLogo({ name, className = "w-5 h-5" }) {
   if (n.includes("architecture") || n.includes("monolith") || n.includes("microservice") || n.includes("event-driven")) return <ArchitectureIcon className={className} />;
   if (n.includes("kafka")) return <KafkaIcon className={className} />;
   if (n.includes("cron")) return <CronIcon className={className} />;
+  if (n.includes("smtp")) return <SmtpIcon className={className} />;
   if (n.includes("razorpay")) return <RazorpayIcon className={className} />;
   if (n.includes("cloudinary")) return <CloudinaryIcon className={className} />;
   if (n.includes("sendgrid")) return <SendGridIcon className={className} />;

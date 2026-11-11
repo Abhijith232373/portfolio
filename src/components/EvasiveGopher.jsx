@@ -97,18 +97,7 @@ export default function EvasiveGopher() {
       },
       undefined,
       (err) => {
-        console.warn('Failed to load standing-gopher.glb, trying fallback:', err);
-        loader.load('/animated-gopher.glb?v=' + Date.now(), (fallbackGltf) => {
-          modelGroup = fallbackGltf.scene;
-          modelGroup.scale.copy(currentScale);
-          modelGroup.position.copy(currentPos);
-          scene.add(modelGroup);
-          mixer = new THREE.AnimationMixer(modelGroup);
-          fallbackGltf.animations.forEach((clip) => {
-            actions[clip.name] = mixer.clipAction(clip);
-          });
-          actions['Idle']?.play();
-        });
+        console.warn('Failed to load standing-gopher.glb:', err);
       }
     );
 

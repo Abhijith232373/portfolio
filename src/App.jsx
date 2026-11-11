@@ -86,7 +86,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <Footer onToggleTerminal={toggleTerminal} />
+      <Footer />
 
       {/* Floating Bottom-Right Arrow to Scroll to Top */}
       <ScrollToTop />

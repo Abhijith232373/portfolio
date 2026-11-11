@@ -130,9 +130,9 @@ export default function PortfolioBackgroundCanvas({ theme = 'amber' }) {
       });
     }
 
-    // 4. Subtle Cursor Fog / Mist Trail (Soft & Whisper-Light)
+    // 4. Subtle Cursor Fog / Mist Trail (Balanced Soft Glow)
     const fogParticles = [];
-    const maxFogParticles = isMobile ? 0 : 20;
+    const maxFogParticles = isMobile ? 0 : 28;
     let lastMousePos = { x: -1000, y: -1000 };
 
     // Mouse Tracking for Interactive Spider Net & Fog
@@ -155,18 +155,18 @@ export default function PortfolioBackgroundCanvas({ theme = 'amber' }) {
       mouse.active = true;
       mouse.targetOpacity = 1;
 
-      // Spawn very delicate, subtle cursor fog puffs when moving
-      if (!isMobile && dist > 6 && lastMousePos.x > 0) {
+      // Spawn delicate cursor fog puffs when moving
+      if (!isMobile && dist > 4 && lastMousePos.x > 0) {
         if (fogParticles.length < maxFogParticles) {
           fogParticles.push({
-            x: e.clientX + (Math.random() - 0.5) * 4,
-            y: e.clientY + (Math.random() - 0.5) * 4,
-            vx: (Math.random() - 0.5) * 0.2 - dx * 0.03,
-            vy: (Math.random() - 0.5) * 0.2 - dy * 0.03,
-            radius: Math.random() * 4 + 8,
-            maxRadius: Math.random() * 10 + 20,
-            alpha: Math.random() * 0.02 + 0.055, // Very soft, whisper-light fog
-            decay: 0.0035 + Math.random() * 0.002
+            x: e.clientX + (Math.random() - 0.5) * 5,
+            y: e.clientY + (Math.random() - 0.5) * 5,
+            vx: (Math.random() - 0.5) * 0.25 - dx * 0.035,
+            vy: (Math.random() - 0.5) * 0.25 - dy * 0.035,
+            radius: Math.random() * 5 + 11,
+            maxRadius: Math.random() * 14 + 28,
+            alpha: Math.random() * 0.03 + 0.08, // Balanced soft mist
+            decay: 0.003 + Math.random() * 0.002
           });
         }
       }

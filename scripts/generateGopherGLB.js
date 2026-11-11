@@ -476,15 +476,14 @@ const runClip = new THREE.AnimationClip('Run', runDuration, [
 ]);
 
 
-// Export scene to public/animated-gopher.glb
+// Export scene to public/standing-gopher.glb
 const exporter = new GLTFExporter();
 exporter.parse(
   root,
   (buffer) => {
-    const outputPath = 'public/animated-gopher.glb';
+    const outputPath = 'public/standing-gopher.glb';
     fs.writeFileSync(outputPath, Buffer.from(buffer));
-    fs.writeFileSync('public/standing-gopher.glb', Buffer.from(buffer));
-    console.log(`Successfully generated authentic STANDING ${outputPath} & standing-gopher.glb! File size: ${(buffer.byteLength / 1024).toFixed(1)} KB`);
+    console.log(`Successfully generated authentic STANDING ${outputPath}! File size: ${(buffer.byteLength / 1024).toFixed(1)} KB`);
 
     const loader = new GLTFLoader();
     loader.parse(buffer, '', (gltf) => {

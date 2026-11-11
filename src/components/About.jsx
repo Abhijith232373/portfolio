@@ -438,10 +438,13 @@ export default function About() {
           </div>
 
           <p className="text-xs sm:text-base text-gray-300 font-sans leading-relaxed max-w-5xl">
-            I'm <strong className="text-white font-semibold">Abhijith P.R</strong>, a Golang Backend & Full-Stack Developer based in{" "}
-            <span className="text-amber-300 font-semibold">{ABOUT_CONFIG.CITY}, Kerala</span>. During my 1-year intensive engineering internship at{" "}
+            Hi, I&apos;m <strong className="text-white font-semibold">Abhijith P.R</strong> from{" "}
+            <span className="text-amber-300 font-semibold">{ABOUT_CONFIG.CITY}, Kerala</span>, and I work as a{" "}
+            <strong className="text-white font-semibold">Golang Backend &amp; Full-Stack Developer</strong>. My journey into software engineering began at{" "}
+            <span className="text-gray-200 font-medium">{ABOUT_CONFIG.EDUCATION_COLLEGE}</span>, where I earned my{" "}
+            <span className="text-cyan-300 font-medium">{ABOUT_CONFIG.EDUCATION_DEGREE}</span> ({ABOUT_CONFIG.EDUCATION_BATCH}). After college, I spent a year gaining real-world experience as an intern at{" "}
             <strong className="text-white font-semibold">{ABOUT_CONFIG.COMPANY}</strong> in{" "}
-            <span className="text-cyan-300 font-mono font-medium">{ABOUT_CONFIG.INTERNSHIP_LOCATION}</span> ({ABOUT_CONFIG.INTERNSHIP_DATES}), working in an agile sprint team with daily stand-ups and code reviews, I engineered production platforms from ground up to live deployment. I specialize in building secure <span className="text-cyan-300 font-mono">REST & gRPC microservices in Go (Fiber & Gin)</span> following Clean Architecture, with JWT/RBAC security, Redis sub-millisecond caching, Kafka event streaming, and PostgreSQL persistence with sqlc, paired with responsive single-page interfaces in React.
+            <span className="text-cyan-300 font-mono font-medium">{ABOUT_CONFIG.INTERNSHIP_LOCATION}</span> ({ABOUT_CONFIG.INTERNSHIP_DATES}), collaborating in agile teams through daily stand-ups, sprint cycles, and code reviews. Today, I&apos;m focused on growing my craft as a developer, taking on new engineering challenges, and actively seeking full-time roles where I can make an immediate impact.
           </p>
         </motion.div>
 

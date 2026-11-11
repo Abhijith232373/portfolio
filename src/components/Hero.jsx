@@ -108,7 +108,7 @@ export default function Hero({ currentTheme }) {
 
             {/* Download Resume Link */}
             <a
-              href="/resume.pdf"
+              href="/Abhijith_PR_Golang_Developer_Resume.pdf"
               download="Abhijith_PR_Resume.pdf"
               onClick={() => soundFX.playSuccess()}
               className="group inline-flex items-center gap-2 px-2 py-3 text-sm tracking-wider uppercase text-white/75 hover:text-white font-medium transition-colors cursor-pointer"
@@ -133,7 +133,7 @@ export default function Hero({ currentTheme }) {
 
           {/* Download Resume Link */}
           <a
-            href="/resume.pdf"
+            href="/Abhijith_PR_Golang_Developer_Resume.pdf"
             download="Abhijith_PR_Resume.pdf"
             onClick={() => soundFX.playSuccess()}
             className="group inline-flex items-center gap-1 px-2 py-1.5 text-[10px] tracking-wider uppercase text-white/75 hover:text-white font-medium active:scale-95 transition-colors cursor-pointer"
@@ -149,9 +149,6 @@ export default function Hero({ currentTheme }) {
         >
           <img
             src="/assets/bgme_cutout.png"
-            onError={(e) => {
-              e.currentTarget.src = '/assets/bgme.png';
-            }}
             alt="Abhijith PR - Fullstack Developer"
             style={{
               maskImage: 'linear-gradient(to top, transparent 0%, black 25px, black 100%)',
